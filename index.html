@@ -1460,7 +1460,7 @@
     // Human icon shown → change title, hide definition, auto-trigger first human component
     if (el.classList.contains('human-reveal')) {
       const slideHeader = el.closest('section').querySelector('.slide-header h2');
-      if (slideHeader) slideHeader.innerHTML = 'HUMAN-TO-AI FRAMEWORK';
+      if (slideHeader) slideHeader.innerHTML = 'HUMAN-TO-AI FRAMEWORK<div class="slide-subtitle" style="font-size:13px; font-weight:400; color:rgba(255,255,255,0.4); margin-top:4px; letter-spacing:0; text-transform:none;">Unlock the potential of Agentic AI &amp; transfer business challenges into Agentic AI solutions</div>';
       const def = document.getElementById('agentDef');
       if (def) { def.style.cssText = 'max-width:100%; opacity:0 !important; transition:opacity 0.5s; animation:none;'; }
       setTimeout(() => Reveal.nextFragment(), 600);
