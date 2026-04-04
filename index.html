@@ -1411,6 +1411,10 @@
     if (el.classList.contains('s4-agent-icons') || el.classList.contains('s4-human-icons')) {
       setTimeout(() => el.classList.add('show'), 200);
     }
+    // Catch-all: any fragment shown → check all visible s4-icons and ensure show class
+    setTimeout(() => {
+      document.querySelectorAll('.s4-icons.fragment.visible:not(.show)').forEach(ic => ic.classList.add('show'));
+    }, 300);
     // Human header shown → change title + definition
     if (el.id === 's4HumanHeader') {
       const slideHeader = el.closest('section').querySelector('.slide-header h2');
