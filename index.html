@@ -1460,9 +1460,15 @@
     // Human icon shown → change title, hide definition, auto-trigger first human component
     if (el.classList.contains('human-reveal')) {
       const slideHeader = el.closest('section').querySelector('.slide-header h2');
-      if (slideHeader) slideHeader.innerHTML = 'HUMAN-TO-AI FRAMEWORK<div class="slide-subtitle" style="font-size:13px; font-weight:400; color:rgba(255,255,255,0.4); margin-top:4px; letter-spacing:0; text-transform:none;">Unlock the potential of Agentic AI &amp; transfer business challenges into Agentic AI solutions</div>';
+      if (slideHeader) slideHeader.innerHTML = 'HUMAN-TO-AI FRAMEWORK';
       const def = document.getElementById('agentDef');
-      if (def) { def.style.cssText = 'max-width:100%; opacity:0 !important; transition:opacity 0.5s; animation:none;'; }
+      if (def) {
+        def.style.cssText = 'max-width:100%; opacity:0; transition:opacity 0.5s; animation:none;';
+        setTimeout(() => {
+          def.innerHTML = 'Unlock the potential of <strong>Agentic AI</strong> &amp; transfer business challenges into <strong>Agentic AI solutions</strong>';
+          def.style.opacity = '1';
+        }, 500);
+      }
       setTimeout(() => Reveal.nextFragment(), 600);
     }
     // Auto-show component icons when row appears
@@ -1499,7 +1505,13 @@
       const slideHeader = el.closest('section').querySelector('.slide-header h2');
       if (slideHeader) slideHeader.innerHTML = 'WHAT IS AN AI AGENT?';
       const def = document.getElementById('agentDef');
-      if (def) { def.style.cssText = 'max-width:100%; opacity:1; animation:none;'; }
+      if (def) {
+        def.style.cssText = 'max-width:100%; opacity:0; animation:none;';
+        setTimeout(() => {
+          def.innerHTML = 'Software programs that can <strong>understand</strong> the environment, <strong>make decisions</strong> and <strong>take actions</strong> based on context, rules and requirements provided without human intervention.';
+          def.style.opacity = '1';
+        }, 300);
+      }
     }
   });
 
