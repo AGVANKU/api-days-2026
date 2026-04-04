@@ -483,7 +483,12 @@
   .fw-card.active-card .fw-card-q { opacity: 0.8; max-height: 100px; }
   .fw-card-1 .fw-card-q { color: var(--nus-blue-glow); }
   .fw-card-2 .fw-card-q { color: var(--nus-orange-glow); }
-  .fw-card-3 .fw-card-q { color: var(--nus-orange-glow); }
+  .fw-card-3 .fw-card-q {
+    background: linear-gradient(135deg, var(--nus-blue-glow), var(--nus-orange-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
   /* ── Slide 4: Agent Components ── */
   .agent-grid {
