@@ -850,6 +850,13 @@
     font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);
     margin-top: 4px; white-space: nowrap;
   }
+  .oaot-auto {
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .oaot-auto.show {
+    opacity: 1; transform: translateY(0);
+  }
 
   /* Right panel — orange */
   .oaot-right {
@@ -1338,66 +1345,66 @@
         <div class="oaot-chart">
 
           <!-- Level 0: Company building -->
-          <div class="oaot-node fragment" data-fragment-index="0" style="left:215px; top:0;">
+          <div class="oaot-node oaot-auto" data-delay="0" style="left:215px; top:0;">
             <img src="image45.png" class="oaot-icon" style="width:90px; height:90px;">
           </div>
 
           <!-- Line: building → dept connector -->
-          <div class="oaot-vline fragment" data-fragment-index="1" style="left:259px; top:92px; height:34px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="600" style="left:259px; top:92px; height:34px;"></div>
           <!-- Horizontal connector across departments -->
-          <div class="oaot-hline fragment" data-fragment-index="1" style="left:95px; top:126px; width:330px;"></div>
+          <div class="oaot-hline oaot-auto" data-delay="600" style="left:95px; top:126px; width:330px;"></div>
 
           <!-- Department stems -->
-          <div class="oaot-vline fragment" data-fragment-index="1" style="left:95px; top:126px; height:20px;"></div>
-          <div class="oaot-vline fragment" data-fragment-index="1" style="left:205px; top:126px; height:20px;"></div>
-          <div class="oaot-vline fragment" data-fragment-index="1" style="left:315px; top:126px; height:20px;"></div>
-          <div class="oaot-vline fragment" data-fragment-index="1" style="left:425px; top:126px; height:20px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="600" style="left:95px; top:126px; height:20px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="600" style="left:205px; top:126px; height:20px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="600" style="left:315px; top:126px; height:20px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="600" style="left:425px; top:126px; height:20px;"></div>
 
           <!-- Department nodes -->
-          <div class="oaot-node fragment" data-fragment-index="1" style="left:63px; top:148px;">
+          <div class="oaot-node oaot-auto" data-delay="800" style="left:63px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">HR</span>
           </div>
-          <div class="oaot-node fragment" data-fragment-index="1" style="left:173px; top:148px;">
+          <div class="oaot-node oaot-auto" data-delay="1000" style="left:173px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">IT</span>
           </div>
-          <div class="oaot-node fragment" data-fragment-index="1" style="left:283px; top:148px;">
+          <div class="oaot-node oaot-auto" data-delay="1200" style="left:283px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">FC</span>
           </div>
-          <div class="oaot-node fragment" data-fragment-index="1" style="left:393px; top:148px;">
+          <div class="oaot-node oaot-auto" data-delay="1400" style="left:393px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">OPS</span>
           </div>
 
           <!-- HR zoom: line down from HR dept -->
-          <div class="oaot-vline fragment" data-fragment-index="2" style="left:95px; top:232px; height:28px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="2000" style="left:95px; top:232px; height:28px;"></div>
           <!-- Head of HR node -->
-          <div class="oaot-node fragment" data-fragment-index="2" style="left:67px; top:262px;">
+          <div class="oaot-node oaot-auto" data-delay="2200" style="left:67px; top:262px;">
             <img src="team-group.png" class="oaot-icon" style="width:56px; height:56px;">
             <span class="oaot-mgr-label">Head of HR</span>
           </div>
 
           <!-- Line from Head of HR to team -->
-          <div class="oaot-vline fragment" data-fragment-index="3" style="left:95px; top:336px; height:24px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="2800" style="left:95px; top:336px; height:24px;"></div>
           <!-- Team horizontal connector -->
-          <div class="oaot-hline fragment" data-fragment-index="3" style="left:25px; top:360px; width:140px;"></div>
+          <div class="oaot-hline oaot-auto" data-delay="2800" style="left:25px; top:360px; width:140px;"></div>
           <!-- Team stems -->
-          <div class="oaot-vline fragment" data-fragment-index="3" style="left:25px; top:360px; height:16px;"></div>
-          <div class="oaot-vline fragment" data-fragment-index="3" style="left:95px; top:360px; height:16px;"></div>
-          <div class="oaot-vline fragment" data-fragment-index="3" style="left:165px; top:360px; height:16px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="2800" style="left:25px; top:360px; height:16px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="2800" style="left:95px; top:360px; height:16px;"></div>
+          <div class="oaot-vline oaot-auto" data-delay="2800" style="left:165px; top:360px; height:16px;"></div>
 
           <!-- Team member nodes -->
-          <div class="oaot-node fragment" data-fragment-index="3" style="left:3px; top:378px;">
+          <div class="oaot-node oaot-auto" data-delay="3000" style="left:3px; top:378px;">
             <img src="manual-review.png" class="oaot-icon" style="width:44px; height:44px;">
             <span class="oaot-team-label">Payroll</span>
           </div>
-          <div class="oaot-node fragment" data-fragment-index="3" style="left:73px; top:378px;">
+          <div class="oaot-node oaot-auto" data-delay="3200" style="left:73px; top:378px;">
             <img src="manual-review.png" class="oaot-icon" style="width:44px; height:44px;">
             <span class="oaot-team-label">People Dev</span>
           </div>
-          <div class="oaot-node fragment" data-fragment-index="3" style="left:143px; top:378px;">
+          <div class="oaot-node oaot-auto" data-delay="3400" style="left:143px; top:378px;">
             <img src="manual-review.png" class="oaot-icon" style="width:44px; height:44px;">
             <span class="oaot-team-label">Recruiting</span>
           </div>
@@ -1406,7 +1413,7 @@
       </div>
 
       <!-- Right 50%: Orange explanation panel -->
-      <div class="oaot-right fragment" data-fragment-index="4">
+      <div class="oaot-right oaot-auto" data-delay="4000">
         <div class="oaot-panel">
           <div class="oaot-panel-title">ONE AGENT ONE TOOL AGENTIC ORGANISATION DESIGN PRINCIPLE</div>
 
@@ -1729,6 +1736,20 @@
         setTimeout(() => task.classList.add('show'), delay + 300);
       });
     }
+
+    // One Agent One Tool slide: auto-animate org chart layers
+    const oaotElements = event.currentSlide.querySelectorAll('.oaot-auto');
+    if (oaotElements.length > 0) {
+      oaotElements.forEach(el => el.classList.remove('show'));
+      oaotElements.forEach(el => {
+        const delay = parseInt(el.getAttribute('data-delay') || '0');
+        setTimeout(() => el.classList.add('show'), delay + 300);
+      });
+    }
+
+    // Reset org chart when leaving the slide
+    const prevOaot = event.previousSlide?.querySelectorAll('.oaot-auto');
+    if (prevOaot) prevOaot.forEach(el => el.classList.remove('show'));
 
     // Reset monolith tasks when leaving the slide
     const prevMonoTasks = event.previousSlide?.querySelectorAll('.mono-auto-task');
