@@ -646,6 +646,8 @@
   .doc-element {
     opacity: 0;
     transform: translateY(20px);
+  }
+  .doc-process.animate .doc-element {
     animation: autoFadeIn 0.6s ease forwards;
   }
   .doc-stack {
@@ -708,6 +710,8 @@
     align-items: center;
     gap: 6px;
     opacity: 0;
+  }
+  .doc-process.animate .doc-bubble {
     animation: autoFadeIn 0.5s ease forwards;
   }
   .doc-bubble::after {
@@ -1592,6 +1596,17 @@
           def.style.opacity = '1';
         }, 300);
       }
+    }
+  });
+
+  // Trigger doc-process animations when slide becomes active
+  Reveal.on('slidechanged', function(event) {
+    const docProcess = event.currentSlide.querySelector('.doc-process');
+    if (docProcess) {
+      docProcess.classList.remove('animate');
+      // Force reflow to restart animations
+      void docProcess.offsetWidth;
+      setTimeout(() => docProcess.classList.add('animate'), 100);
     }
   });
 
