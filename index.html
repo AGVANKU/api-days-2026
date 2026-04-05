@@ -945,13 +945,9 @@
 </style>
 </head>
 <body>
-
 <div class="reveal">
-<div class="slides">
+  <div class="slides">
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 1: TITLE -->
-<!-- ═══════════════════════════════════════════ -->
 <section class="title-slide" data-slide-bg="true">
   <div class="slide-content">
     <div class="title-left">
@@ -1018,9 +1014,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 2: THE HYPE PROBLEM -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="CURRENT STATE OF AI IN THE INDUSTRY">
   <div class="slide-content">
     <div class="buzzword-cloud" id="buzzCloud">
@@ -1069,9 +1062,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 3: THREE FRAMEWORKS OVERVIEW -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-auto-animate data-slide-bg="true" data-slide-title="FRAMEWORKS TO UNLOCK ENTERPRISE AGENTIC AI">
   <div class="slide-content">
     <div class="fw-cards">
@@ -1103,9 +1093,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 4: WHAT IS AN AI AGENT? -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="WHAT IS AN AI AGENT?">
   <div class="slide-content">
     <p class="s4-definition" id="agentDef">Software programs that can <strong>understand</strong> the environment, <strong>make decisions</strong> and <strong>take actions</strong> based on context, rules and requirements provided without human intervention.</p>
@@ -1179,9 +1166,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 5: F1 APPLIED — DOC PROCESSING -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="HUMAN-TO-AI-AGENT FRAMEWORK IN PRACTICE">
   <div class="slide-content">
     <p style="font-size:18px; color:rgba(255,255,255,0.55); margin-bottom:0 !important;">Example: Document Automation</p>
@@ -1252,9 +1236,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 6: THE MONOLITH ANTI-PATTERN -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="ONE AGENT TO RULE THEM ALL?">
   <div class="slide-content">
 
@@ -1322,9 +1303,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 7: FRAMEWORK 2 — ONE AGENT ONE TOOL -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="THE ONE AGENT ONE TOOL FRAMEWORK">
   <div class="slide-content">
     <div class="eyebrow">Framework 2</div>
@@ -1372,9 +1350,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 9: FRAMEWORK 3 — 3-LAYER ARCHITECTURE -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="THE 3-LAYER AGENTIC ARCHITECTURE">
   <div class="slide-content">
     <div class="eyebrow">Framework 3</div>
@@ -1424,9 +1399,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 10: IMPACT / KPIs -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="MEASURABLE OPERATIONAL IMPACT">
   <div class="slide-content">
 
@@ -1460,9 +1432,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SLIDE 11: CLOSING — PRINTING PRESS -->
-<!-- ═══════════════════════════════════════════ -->
 <section data-slide-bg="true" data-slide-title="THE PRINTING PRESS DROVE LITERACY">
   <div class="slide-content">
 
@@ -1526,21 +1495,12 @@
   </div>
 </section>
 
-</div><!-- .slides -->
-</div><!-- .reveal -->
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
 <script>
-  Reveal.initialize({
-    width: 1280,
-    height: 720,
-    center: false,
-    hash: true,
-    slideNumber: true,
-    transition: 'fade',
-    controls: true,
-    progress: true,
-  });
+// Fragment event handlers — loaded after Reveal.initialize()
 
   // Framework cards: activate on fragment shown
   Reveal.on('fragmentshown', function(event) {
