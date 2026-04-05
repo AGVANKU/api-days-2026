@@ -821,67 +821,34 @@
     flex: 0 0 50%; display: flex; justify-content: center; padding-top: 10px;
   }
   .oaot-chart {
-    display: flex; flex-direction: column; align-items: flex-start; gap: 0;
-    position: relative;
+    position: relative; width: 520px; height: 360px;
   }
-
-  /* Icons */
-  .oaot-icon-lg { width: 72px; height: 72px; object-fit: contain; }
-  .oaot-icon-md { width: 48px; height: 48px; object-fit: contain; }
-  .oaot-icon-sm { width: 40px; height: 40px; object-fit: contain; }
-  .oaot-icon-xs { width: 32px; height: 32px; object-fit: contain; }
-
-  /* Company level */
-  .oaot-company { display: flex; justify-content: center; width: 100%; padding-left: 40px; }
-
-  /* Vertical connector lines */
-  .oaot-vline { width: 2px; height: 16px; background: var(--nus-blue-glow); margin-left: 76px; }
-
-  /* Departments row */
-  .oaot-depts { display: flex; flex-direction: column; align-items: center; width: 100%; }
-  .oaot-hconn {
-    width: 340px; height: 2px; background: var(--nus-blue-glow);
-    margin-left: -50px;
+  .oaot-node {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 1;
   }
-  .oaot-dept-row { display: flex; gap: 16px; justify-content: center; margin-left: -50px; }
-  .oaot-dept {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  .oaot-icon { object-fit: contain; }
+  .oaot-invert { filter: invert(1); }
+  .oaot-vline {
+    position: absolute; width: 2px; background: rgba(21,101,192,0.5);
   }
-  .oaot-dept-stem { width: 2px; height: 10px; background: var(--nus-blue-glow); }
-  .oaot-label {
+  .oaot-hline {
+    position: absolute; height: 2px; background: rgba(21,101,192,0.5);
+  }
+  .oaot-dept-label {
     font-size: 11px; font-weight: 700; letter-spacing: 1px;
     color: #000; background: var(--nus-orange);
-    padding: 2px 12px; border-radius: 4px; margin-top: 2px;
-  }
-
-  /* HR branch — extends down from HR department */
-  .oaot-hr-branch {
-    display: flex; flex-direction: column; align-items: center;
-    margin-left: -110px; /* align under HR */
-  }
-  .oaot-branch-line { width: 2px; height: 20px; background: var(--nus-blue-glow); }
-  .oaot-branch-line-short { width: 2px; height: 14px; background: var(--nus-blue-glow); }
-  .oaot-manager-node {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-  }
-  .oaot-manager-label {
-    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7);
-  }
-
-  /* Team connectors and members */
-  .oaot-team-hconn {
-    width: 180px; height: 2px; background: var(--nus-blue-glow);
-  }
-  .oaot-team {
-    display: flex; gap: 20px; justify-content: center;
-  }
-  .oaot-team-member {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-  }
-  .oaot-team-stem { width: 2px; height: 8px; background: var(--nus-blue-glow); }
-  .oaot-team-role {
-    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);
+    padding: 2px 12px; border-radius: 4px; margin-top: 4px;
     white-space: nowrap;
+  }
+  .oaot-mgr-label {
+    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7);
+    margin-top: 4px; white-space: nowrap;
+  }
+  .oaot-team-label {
+    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);
+    margin-top: 4px; white-space: nowrap;
   }
 
   /* Right panel — orange */
@@ -1366,71 +1333,73 @@
     <p class="subtitle" style="margin-bottom: 0;">How Organizations Scale with Separation of Concern</p>
 
     <div class="oaot-layout">
-      <!-- Left 50%: Org chart with images -->
+      <!-- Left 50%: Org chart with absolute positioning -->
       <div class="oaot-left">
         <div class="oaot-chart">
 
-          <!-- Level 1: Company building -->
-          <div class="oaot-company fragment" data-fragment-index="0">
-            <img src="image45.png" class="oaot-icon-lg">
-          </div>
-          <div class="oaot-vline fragment" data-fragment-index="1"></div>
-
-          <!-- Level 2: Department heads (4 branches from company) -->
-          <div class="oaot-depts fragment" data-fragment-index="1">
-            <div class="oaot-hconn"></div>
-            <div class="oaot-dept-row">
-              <div class="oaot-dept">
-                <div class="oaot-dept-stem"></div>
-                <img src="people-at-laptops.png" class="oaot-icon-md">
-                <span class="oaot-label">HR</span>
-              </div>
-              <div class="oaot-dept">
-                <div class="oaot-dept-stem"></div>
-                <img src="people-at-laptops.png" class="oaot-icon-md">
-                <span class="oaot-label">IT</span>
-              </div>
-              <div class="oaot-dept">
-                <div class="oaot-dept-stem"></div>
-                <img src="people-at-laptops.png" class="oaot-icon-md">
-                <span class="oaot-label">FC</span>
-              </div>
-              <div class="oaot-dept">
-                <div class="oaot-dept-stem"></div>
-                <img src="people-at-laptops.png" class="oaot-icon-md">
-                <span class="oaot-label">OPS</span>
-              </div>
-            </div>
+          <!-- Level 0: Company building -->
+          <div class="oaot-node fragment" data-fragment-index="0" style="left:230px; top:0;">
+            <img src="image45.png" class="oaot-icon" style="width:60px; height:60px;">
           </div>
 
-          <!-- Line from HR down to Head of HR -->
-          <div class="oaot-hr-branch fragment" data-fragment-index="2">
-            <div class="oaot-branch-line"></div>
-            <!-- Head of HR (manager with biceps) -->
-            <div class="oaot-manager-node">
-              <img src="image43.png" class="oaot-icon-sm">
-              <span class="oaot-manager-label">Head of HR</span>
-            </div>
-            <div class="oaot-branch-line-short"></div>
-            <!-- HR team: individual roles -->
-            <div class="oaot-team-hconn"></div>
-            <div class="oaot-team fragment" data-fragment-index="3">
-              <div class="oaot-team-member">
-                <div class="oaot-team-stem"></div>
-                <img src="image55.png" class="oaot-icon-xs">
-                <span class="oaot-team-role">Payroll</span>
-              </div>
-              <div class="oaot-team-member">
-                <div class="oaot-team-stem"></div>
-                <img src="image55.png" class="oaot-icon-xs">
-                <span class="oaot-team-role">People Dev</span>
-              </div>
-              <div class="oaot-team-member">
-                <div class="oaot-team-stem"></div>
-                <img src="image55.png" class="oaot-icon-xs">
-                <span class="oaot-team-role">Recruiting</span>
-              </div>
-            </div>
+          <!-- Line: building → dept connector -->
+          <div class="oaot-vline fragment" data-fragment-index="1" style="left:259px; top:62px; height:28px;"></div>
+          <!-- Horizontal connector across departments -->
+          <div class="oaot-hline fragment" data-fragment-index="1" style="left:94px; top:90px; width:332px;"></div>
+
+          <!-- Department stems -->
+          <div class="oaot-vline fragment" data-fragment-index="1" style="left:94px; top:90px; height:16px;"></div>
+          <div class="oaot-vline fragment" data-fragment-index="1" style="left:204px; top:90px; height:16px;"></div>
+          <div class="oaot-vline fragment" data-fragment-index="1" style="left:314px; top:90px; height:16px;"></div>
+          <div class="oaot-vline fragment" data-fragment-index="1" style="left:424px; top:90px; height:16px;"></div>
+
+          <!-- Department nodes -->
+          <div class="oaot-node fragment" data-fragment-index="1" style="left:73px; top:108px;">
+            <img src="people-at-laptops.png" class="oaot-icon" style="width:44px; height:44px;">
+            <span class="oaot-dept-label">HR</span>
+          </div>
+          <div class="oaot-node fragment" data-fragment-index="1" style="left:183px; top:108px;">
+            <img src="people-at-laptops.png" class="oaot-icon" style="width:44px; height:44px;">
+            <span class="oaot-dept-label">IT</span>
+          </div>
+          <div class="oaot-node fragment" data-fragment-index="1" style="left:293px; top:108px;">
+            <img src="people-at-laptops.png" class="oaot-icon" style="width:44px; height:44px;">
+            <span class="oaot-dept-label">FC</span>
+          </div>
+          <div class="oaot-node fragment" data-fragment-index="1" style="left:403px; top:108px;">
+            <img src="people-at-laptops.png" class="oaot-icon" style="width:44px; height:44px;">
+            <span class="oaot-dept-label">OPS</span>
+          </div>
+
+          <!-- HR zoom: line down from HR dept -->
+          <div class="oaot-vline fragment" data-fragment-index="2" style="left:94px; top:178px; height:22px;"></div>
+          <!-- Head of HR node -->
+          <div class="oaot-node fragment" data-fragment-index="2" style="left:77px; top:202px;">
+            <img src="image43.png" class="oaot-icon" style="width:36px; height:36px;">
+            <span class="oaot-mgr-label">Head of HR</span>
+          </div>
+
+          <!-- Line from Head of HR to team -->
+          <div class="oaot-vline fragment" data-fragment-index="3" style="left:94px; top:260px; height:18px;"></div>
+          <!-- Team horizontal connector -->
+          <div class="oaot-hline fragment" data-fragment-index="3" style="left:24px; top:278px; width:142px;"></div>
+          <!-- Team stems -->
+          <div class="oaot-vline fragment" data-fragment-index="3" style="left:24px; top:278px; height:14px;"></div>
+          <div class="oaot-vline fragment" data-fragment-index="3" style="left:94px; top:278px; height:14px;"></div>
+          <div class="oaot-vline fragment" data-fragment-index="3" style="left:164px; top:278px; height:14px;"></div>
+
+          <!-- Team member nodes -->
+          <div class="oaot-node fragment" data-fragment-index="3" style="left:10px; top:294px;">
+            <img src="image55.png" class="oaot-icon oaot-invert" style="width:28px; height:28px;">
+            <span class="oaot-team-label">Payroll</span>
+          </div>
+          <div class="oaot-node fragment" data-fragment-index="3" style="left:80px; top:294px;">
+            <img src="image55.png" class="oaot-icon oaot-invert" style="width:28px; height:28px;">
+            <span class="oaot-team-label">People Dev</span>
+          </div>
+          <div class="oaot-node fragment" data-fragment-index="3" style="left:150px; top:294px;">
+            <img src="image55.png" class="oaot-icon oaot-invert" style="width:28px; height:28px;">
+            <span class="oaot-team-label">Recruiting</span>
           </div>
 
         </div>
