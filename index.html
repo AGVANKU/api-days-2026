@@ -815,37 +815,74 @@
 
   /* ── Slide 7: One Agent One Tool ── */
   .oaot-layout {
-    display: flex; align-items: stretch; height: 100%; gap: 0; margin-top: 16px;
+    display: flex; align-items: flex-start; gap: 0; margin-top: 10px;
   }
   .oaot-left {
-    flex: 0 0 50%; display: flex; align-items: center; justify-content: center;
+    flex: 0 0 50%; display: flex; justify-content: center; padding-top: 10px;
   }
   .oaot-chart {
-    display: flex; flex-direction: column; align-items: center; gap: 0;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+    position: relative;
   }
-  .oaot-level { display: flex; flex-direction: column; align-items: center; }
-  .oaot-vline { width: 2px; height: 20px; background: var(--nus-blue-glow); opacity: 0.5; }
-  .oaot-hline {
-    width: 320px; height: 2px; background: var(--nus-blue-glow); opacity: 0.5;
-    margin-bottom: 4px;
+
+  /* Icons */
+  .oaot-icon-lg { width: 72px; height: 72px; object-fit: contain; }
+  .oaot-icon-md { width: 48px; height: 48px; object-fit: contain; }
+  .oaot-icon-sm { width: 40px; height: 40px; object-fit: contain; }
+  .oaot-icon-xs { width: 32px; height: 32px; object-fit: contain; }
+
+  /* Company level */
+  .oaot-company { display: flex; justify-content: center; width: 100%; padding-left: 40px; }
+
+  /* Vertical connector lines */
+  .oaot-vline { width: 2px; height: 16px; background: var(--nus-blue-glow); margin-left: 76px; }
+
+  /* Departments row */
+  .oaot-depts { display: flex; flex-direction: column; align-items: center; width: 100%; }
+  .oaot-hconn {
+    width: 340px; height: 2px; background: var(--nus-blue-glow);
+    margin-left: -50px;
   }
-  .oaot-hline-short { width: 200px; }
-  .oaot-node { text-align: center; }
-  .oaot-company-node { font-size: 64px; }
-  .oaot-dept-row { display: flex; gap: 24px; justify-content: center; }
+  .oaot-dept-row { display: flex; gap: 16px; justify-content: center; margin-left: -50px; }
   .oaot-dept {
     display: flex; flex-direction: column; align-items: center; gap: 2px;
   }
-  .oaot-dept-vline { width: 2px; height: 12px; background: var(--nus-blue-glow); opacity: 0.5; }
-  .oaot-dept-icon { font-size: 42px; }
-  .oaot-dept-label {
+  .oaot-dept-stem { width: 2px; height: 10px; background: var(--nus-blue-glow); }
+  .oaot-label {
     font-size: 11px; font-weight: 700; letter-spacing: 1px;
-    color: var(--nus-orange); background: rgba(239,124,0,0.15);
-    padding: 2px 10px; border-radius: 4px;
+    color: #000; background: var(--nus-orange);
+    padding: 2px 12px; border-radius: 4px; margin-top: 2px;
   }
-  .oaot-manager-icon { font-size: 52px; }
-  .oaot-analyst-row { display: flex; gap: 18px; justify-content: center; }
-  .oaot-analyst-icon { font-size: 40px; }
+
+  /* HR branch — extends down from HR department */
+  .oaot-hr-branch {
+    display: flex; flex-direction: column; align-items: center;
+    margin-left: -110px; /* align under HR */
+  }
+  .oaot-branch-line { width: 2px; height: 20px; background: var(--nus-blue-glow); }
+  .oaot-branch-line-short { width: 2px; height: 14px; background: var(--nus-blue-glow); }
+  .oaot-manager-node {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .oaot-manager-label {
+    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7);
+  }
+
+  /* Team connectors and members */
+  .oaot-team-hconn {
+    width: 180px; height: 2px; background: var(--nus-blue-glow);
+  }
+  .oaot-team {
+    display: flex; gap: 20px; justify-content: center;
+  }
+  .oaot-team-member {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .oaot-team-stem { width: 2px; height: 8px; background: var(--nus-blue-glow); }
+  .oaot-team-role {
+    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+  }
 
   /* Right panel — orange */
   .oaot-right {
@@ -853,20 +890,20 @@
   }
   .oaot-panel {
     background: var(--nus-orange); border-radius: 16px;
-    padding: 28px 32px; width: 100%;
-    display: flex; flex-direction: column; gap: 20px;
+    padding: 24px 28px; width: 100%;
+    display: flex; flex-direction: column; gap: 18px;
   }
   .oaot-panel-title {
-    font-size: 16px; font-weight: 800; letter-spacing: 1px;
+    font-size: 15px; font-weight: 800; letter-spacing: 1px;
     color: #fff;
   }
   .oaot-role {
     display: flex; gap: 14px; align-items: flex-start;
   }
-  .oaot-role-icon { font-size: 44px; flex-shrink: 0; }
+  .oaot-role-img { width: 50px; height: 50px; object-fit: contain; flex-shrink: 0; }
   .oaot-role-text { display: flex; flex-direction: column; gap: 4px; }
-  .oaot-role-name { font-size: 16px; font-weight: 700; color: var(--nus-blue); }
-  .oaot-role-desc { font-size: 14px; color: #fff; line-height: 1.4; }
+  .oaot-role-name { font-size: 15px; font-weight: 700; color: var(--nus-blue); }
+  .oaot-role-desc { font-size: 13px; color: #fff; line-height: 1.4; }
 
   .oaot-scale {
     display: flex; gap: 14px; align-items: center;
@@ -876,15 +913,15 @@
   }
   .oaot-scale-n {
     background: var(--nus-blue); color: #fff; font-weight: 700;
-    font-size: 14px; width: 28px; height: 28px; border-radius: 6px;
+    font-size: 13px; width: 26px; height: 26px; border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
   }
-  .oaot-scale-dots { color: var(--nus-blue); font-size: 18px; line-height: 1; }
+  .oaot-scale-dots { color: var(--nus-blue); font-size: 16px; line-height: 1; }
   .oaot-scale-box {
-    background: var(--nus-blue); border-radius: 8px; padding: 10px 16px;
+    background: var(--nus-blue); border-radius: 8px; padding: 8px 14px;
     flex: 1;
   }
-  .oaot-scale-title { font-size: 14px; font-weight: 700; color: #fff; }
+  .oaot-scale-title { font-size: 13px; font-weight: 700; color: #fff; }
 
   /* ── Slide 9: 3-Layer ── */
   .layers { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
@@ -1329,64 +1366,73 @@
     <p class="subtitle" style="margin-bottom: 0;">How Organizations Scale with Separation of Concern</p>
 
     <div class="oaot-layout">
-      <!-- Left 50%: Org chart with icons -->
+      <!-- Left 50%: Org chart with images -->
       <div class="oaot-left">
         <div class="oaot-chart">
-          <!-- Level 1: Company -->
-          <div class="oaot-level oaot-company fragment" data-fragment-index="0">
-            <div class="oaot-node oaot-company-node">🏢</div>
-          </div>
 
-          <!-- Connector line -->
+          <!-- Level 1: Company building -->
+          <div class="oaot-company fragment" data-fragment-index="0">
+            <img src="image45.png" class="oaot-icon-lg">
+          </div>
           <div class="oaot-vline fragment" data-fragment-index="1"></div>
 
-          <!-- Level 2: Departments -->
-          <div class="oaot-level oaot-departments fragment" data-fragment-index="1">
-            <div class="oaot-hline"></div>
+          <!-- Level 2: Department heads (4 branches from company) -->
+          <div class="oaot-depts fragment" data-fragment-index="1">
+            <div class="oaot-hconn"></div>
             <div class="oaot-dept-row">
               <div class="oaot-dept">
-                <div class="oaot-dept-vline"></div>
-                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
-                <div class="oaot-dept-label">HR</div>
+                <div class="oaot-dept-stem"></div>
+                <img src="people-at-laptops.png" class="oaot-icon-md">
+                <span class="oaot-label">HR</span>
               </div>
               <div class="oaot-dept">
-                <div class="oaot-dept-vline"></div>
-                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
-                <div class="oaot-dept-label">IT</div>
+                <div class="oaot-dept-stem"></div>
+                <img src="people-at-laptops.png" class="oaot-icon-md">
+                <span class="oaot-label">IT</span>
               </div>
               <div class="oaot-dept">
-                <div class="oaot-dept-vline"></div>
-                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
-                <div class="oaot-dept-label">FC</div>
+                <div class="oaot-dept-stem"></div>
+                <img src="people-at-laptops.png" class="oaot-icon-md">
+                <span class="oaot-label">FC</span>
               </div>
               <div class="oaot-dept">
-                <div class="oaot-dept-vline"></div>
-                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
-                <div class="oaot-dept-label">OPS</div>
+                <div class="oaot-dept-stem"></div>
+                <img src="people-at-laptops.png" class="oaot-icon-md">
+                <span class="oaot-label">OPS</span>
               </div>
             </div>
           </div>
 
-          <!-- Connector line to manager -->
-          <div class="oaot-vline fragment" data-fragment-index="2"></div>
-
-          <!-- Level 3: Manager -->
-          <div class="oaot-level oaot-manager fragment" data-fragment-index="2">
-            <div class="oaot-node oaot-manager-icon">👩‍💼💪</div>
-          </div>
-
-          <!-- Connector line to analysts -->
-          <div class="oaot-vline fragment" data-fragment-index="3"></div>
-
-          <!-- Level 4: Individual analysts -->
-          <div class="oaot-level oaot-analysts fragment" data-fragment-index="3">
-            <div class="oaot-hline oaot-hline-short"></div>
-            <div class="oaot-analyst-row">
-              <div class="oaot-node oaot-analyst-icon">🧑‍💼</div>
-              <div class="oaot-node oaot-analyst-icon">👩‍💼</div>
-              <div class="oaot-node oaot-analyst-icon">👨‍💼</div>
+          <!-- Line from HR down to Head of HR -->
+          <div class="oaot-hr-branch fragment" data-fragment-index="2">
+            <div class="oaot-branch-line"></div>
+            <!-- Head of HR (manager with biceps) -->
+            <div class="oaot-manager-node">
+              <img src="image43.png" class="oaot-icon-sm">
+              <span class="oaot-manager-label">Head of HR</span>
+            </div>
+            <div class="oaot-branch-line-short"></div>
+            <!-- HR team: individual roles -->
+            <div class="oaot-team-hconn"></div>
+            <div class="oaot-team fragment" data-fragment-index="3">
+              <div class="oaot-team-member">
+                <div class="oaot-team-stem"></div>
+                <img src="image55.png" class="oaot-icon-xs">
+                <span class="oaot-team-role">Payroll</span>
+              </div>
+              <div class="oaot-team-member">
+                <div class="oaot-team-stem"></div>
+                <img src="image55.png" class="oaot-icon-xs">
+                <span class="oaot-team-role">People Dev</span>
+              </div>
+              <div class="oaot-team-member">
+                <div class="oaot-team-stem"></div>
+                <img src="image55.png" class="oaot-icon-xs">
+                <span class="oaot-team-role">Recruiting</span>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -1396,7 +1442,7 @@
           <div class="oaot-panel-title">ONE AGENT ONE TOOL AGENTIC ORGANISATION DESIGN PRINCIPLE</div>
 
           <div class="oaot-role">
-            <div class="oaot-role-icon">🤖</div>
+            <img src="ai-robot.png" class="oaot-role-img">
             <div class="oaot-role-text">
               <div class="oaot-role-name">Manager/Task Orchestrator</div>
               <div class="oaot-role-desc">Receives task/request, plans &amp; triages what to do, knows capabilities of team members</div>
@@ -1415,7 +1461,7 @@
           </div>
 
           <div class="oaot-role">
-            <div class="oaot-role-icon">🤖</div>
+            <img src="ai-robot.png" class="oaot-role-img">
             <div class="oaot-role-text">
               <div class="oaot-role-name">Team Member/Workflow Executor</div>
               <div class="oaot-role-desc">Receives curated tasks and context, plans based on context &amp; available tool</div>
