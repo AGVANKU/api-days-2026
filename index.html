@@ -858,18 +858,34 @@
     opacity: 1; transform: translateY(0);
   }
 
-  /* Right panel — orange */
+  /* Right panel — speech bubble */
   .oaot-right {
-    flex: 0 0 50%; display: flex; align-items: center; padding-left: 20px;
+    flex: 0 0 50%; display: flex; align-items: center; padding-left: 40px;
+    position: relative;
   }
-  .oaot-panel {
+  .oaot-bubble {
     background: var(--nus-orange); border-radius: 16px;
-    padding: 24px 28px; width: 100%;
-    display: flex; flex-direction: column; gap: 18px;
+    padding: 28px 28px; width: 100%;
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative;
+  }
+  .oaot-bubble-tail {
+    position: absolute; left: -20px; top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    border-right: 22px solid var(--nus-orange);
   }
   .oaot-panel-title {
     font-size: 15px; font-weight: 800; letter-spacing: 1px;
-    color: #fff;
+    color: #fff; line-height: 1.4;
+  }
+  .oaot-delayed {
+    opacity: 0; transition: opacity 0.6s ease;
+  }
+  .oaot-delayed.show {
+    opacity: 1;
   }
   .oaot-role {
     display: flex; gap: 14px; align-items: flex-start;
@@ -878,12 +894,9 @@
   .oaot-role-text { display: flex; flex-direction: column; gap: 4px; }
   .oaot-role-name { font-size: 15px; font-weight: 700; color: var(--nus-blue); }
   .oaot-role-desc { font-size: 13px; color: #fff; line-height: 1.4; }
-
-  .oaot-scale {
-    display: flex; gap: 14px; align-items: center;
-  }
-  .oaot-scale-numbers {
+  .oaot-1ton {
     display: flex; flex-direction: column; align-items: center; gap: 2px;
+    width: 50px; /* matches .oaot-role-img width for horizontal alignment */
   }
   .oaot-scale-n {
     background: var(--nus-blue); color: #fff; font-weight: 700;
@@ -891,11 +904,6 @@
     display: flex; align-items: center; justify-content: center;
   }
   .oaot-scale-dots { color: var(--nus-blue); font-size: 16px; line-height: 1; }
-  .oaot-scale-box {
-    background: var(--nus-blue); border-radius: 8px; padding: 8px 14px;
-    flex: 1;
-  }
-  .oaot-scale-title { font-size: 13px; font-weight: 700; color: #fff; }
 
   /* ── Slide 9: 3-Layer ── */
   .layers { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
@@ -1351,7 +1359,6 @@
 
           <!-- Line: building → dept connector -->
           <div class="oaot-vline oaot-auto" data-delay="600" style="left:259px; top:92px; height:34px;"></div>
-          <!-- Horizontal connector across departments -->
           <div class="oaot-hline oaot-auto" data-delay="600" style="left:95px; top:126px; width:330px;"></div>
 
           <!-- Department stems -->
@@ -1388,9 +1395,7 @@
 
           <!-- Line from Head of HR to team -->
           <div class="oaot-vline oaot-auto" data-delay="2800" style="left:95px; top:336px; height:24px;"></div>
-          <!-- Team horizontal connector -->
           <div class="oaot-hline oaot-auto" data-delay="2800" style="left:25px; top:360px; width:140px;"></div>
-          <!-- Team stems -->
           <div class="oaot-vline oaot-auto" data-delay="2800" style="left:25px; top:360px; height:16px;"></div>
           <div class="oaot-vline oaot-auto" data-delay="2800" style="left:95px; top:360px; height:16px;"></div>
           <div class="oaot-vline oaot-auto" data-delay="2800" style="left:165px; top:360px; height:16px;"></div>
@@ -1412,36 +1417,35 @@
         </div>
       </div>
 
-      <!-- Right 50%: Orange explanation panel -->
-      <div class="oaot-right oaot-auto" data-delay="4000">
-        <div class="oaot-panel">
-          <div class="oaot-panel-title">ONE AGENT ONE TOOL AGENTIC ORGANISATION DESIGN PRINCIPLE</div>
+      <!-- Right 50%: Speech bubble from HR Manager -->
+      <div class="oaot-right">
+        <div class="oaot-bubble fragment" data-fragment-index="0">
+          <div class="oaot-bubble-tail"></div>
+          <div class="oaot-panel-title oaot-delayed" data-parent-frag="0">ONE AGENT ONE TOOL<br>AGENTIC ORGANISATION DESIGN PRINCIPLE</div>
 
-          <div class="oaot-role">
+          <!-- Click 2: Manager role -->
+          <div class="oaot-role fragment" data-fragment-index="1">
             <img src="ai-robot.png" class="oaot-role-img">
             <div class="oaot-role-text">
               <div class="oaot-role-name">Manager/Task Orchestrator</div>
-              <div class="oaot-role-desc">Receives task/request, plans &amp; triages what to do, knows capabilities of team members</div>
+              <div class="oaot-role-desc oaot-delayed" data-parent-frag="1">Receives task/request, plans &amp; triages what to do, knows capabilities of team members</div>
             </div>
           </div>
 
-          <div class="oaot-scale">
-            <div class="oaot-scale-numbers">
-              <span class="oaot-scale-n">1</span>
-              <span class="oaot-scale-dots">⋮</span>
-              <span class="oaot-scale-n">n</span>
-            </div>
-            <div class="oaot-scale-box">
-              <div class="oaot-scale-title">WHAT IS THE RIGHT TEAM SIZE?</div>
-            </div>
-          </div>
-
-          <div class="oaot-role">
+          <!-- Click 3: Team member role -->
+          <div class="oaot-role fragment" data-fragment-index="2">
             <img src="ai-robot.png" class="oaot-role-img">
             <div class="oaot-role-text">
               <div class="oaot-role-name">Team Member/Workflow Executor</div>
-              <div class="oaot-role-desc">Receives curated tasks and context, plans based on context &amp; available tool</div>
+              <div class="oaot-role-desc oaot-delayed" data-parent-frag="2">Receives curated tasks and context, plans based on context &amp; available tool</div>
             </div>
+          </div>
+
+          <!-- Click 4: 1-to-N relationship -->
+          <div class="oaot-1ton fragment" data-fragment-index="3">
+            <span class="oaot-scale-n">1</span>
+            <span class="oaot-scale-dots">⋮</span>
+            <span class="oaot-scale-n">n</span>
           </div>
         </div>
       </div>
@@ -1617,6 +1621,27 @@
     if (el.classList.contains('fw-card')) {
       el.classList.add('active-card');
     }
+    // Speech bubble delayed elements: auto-fade after parent fragment appears
+    const fragIndex = el.getAttribute('data-fragment-index');
+    if (fragIndex !== null) {
+      el.querySelectorAll('.oaot-delayed[data-parent-frag="' + fragIndex + '"]').forEach(d => {
+        setTimeout(() => d.classList.add('show'), 600);
+      });
+      // Also handle delayed elements that are direct children of the fragment
+      if (el.classList.contains('oaot-role')) {
+        el.querySelectorAll('.oaot-delayed').forEach(d => {
+          setTimeout(() => d.classList.add('show'), 600);
+        });
+      }
+    }
+    // Bubble itself: auto-fade the title
+    if (el.classList.contains('oaot-bubble')) {
+      el.querySelectorAll('.oaot-delayed').forEach(d => {
+        if (d.getAttribute('data-parent-frag') === '0') {
+          setTimeout(() => d.classList.add('show'), 500);
+        }
+      });
+    }
     // Dead face on monolith slide
     if (el.id === 'monoDeadFace') {
       setTimeout(() => el.classList.add('visible'), 100);
@@ -1673,6 +1698,8 @@
     if (el.id === 'monoDeadFace') {
       el.classList.remove('visible');
     }
+    // Reset delayed elements when fragment hidden
+    el.querySelectorAll('.oaot-delayed').forEach(d => d.classList.remove('show'));
     if (el.classList.contains('fw-card')) {
       el.classList.remove('active-card');
     }
