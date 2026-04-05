@@ -836,11 +836,14 @@
   .oaot-hline {
     position: absolute; height: 2px; background: rgba(21,101,192,0.5);
   }
+  .oaot-node.oaot-dept { position: absolute; display: flex; flex-direction: column; align-items: center; z-index: 1; }
   .oaot-dept-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 1px;
-    color: #000; background: var(--nus-orange);
-    padding: 2px 12px; border-radius: 4px; margin-top: 4px;
+    font-size: 11px; font-weight: 900; letter-spacing: 1px;
+    color: #000; background: #f5c518;
+    padding: 1px 10px; border-radius: 3px;
     white-space: nowrap;
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    z-index: 2; line-height: 1.4;
   }
   .oaot-mgr-label {
     font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7);
@@ -1368,19 +1371,19 @@
           <div class="oaot-vline oaot-auto" data-delay="600" style="left:425px; top:126px; height:20px;"></div>
 
           <!-- Department nodes -->
-          <div class="oaot-node oaot-auto" data-delay="800" style="left:63px; top:148px;">
+          <div class="oaot-dept oaot-auto" data-delay="800" style="left:63px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">HR</span>
           </div>
-          <div class="oaot-node oaot-auto" data-delay="1000" style="left:173px; top:148px;">
+          <div class="oaot-dept oaot-auto" data-delay="1000" style="left:173px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">IT</span>
           </div>
-          <div class="oaot-node oaot-auto" data-delay="1200" style="left:283px; top:148px;">
+          <div class="oaot-dept oaot-auto" data-delay="1200" style="left:283px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">FC</span>
           </div>
-          <div class="oaot-node oaot-auto" data-delay="1400" style="left:393px; top:148px;">
+          <div class="oaot-dept oaot-auto" data-delay="1400" style="left:393px; top:148px;">
             <img src="hr-department.png" class="oaot-icon" style="width:64px; height:64px;">
             <span class="oaot-dept-label">OPS</span>
           </div>
