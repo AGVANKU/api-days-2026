@@ -813,39 +813,78 @@
     font-size: 28px; font-weight: 800; color: var(--nus-orange);
   }
 
-  /* ── Slide 8: One Agent One Tool ── */
-  .org-chart { display: flex; flex-direction: column; align-items: center; margin-top: 32px; gap: 20px; }
-  .org-manager {
-    background: rgba(21,101,192,0.15); border: 2px solid rgba(21,101,192,0.3);
-    border-radius: 12px; padding: 18px 36px; text-align: center;
+  /* ── Slide 7: One Agent One Tool ── */
+  .oaot-layout {
+    display: flex; align-items: stretch; height: 100%; gap: 0; margin-top: 16px;
   }
-  .org-manager .org-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--nus-blue-glow); margin-bottom: 4px; }
-  .org-manager .org-title { font-size: 20px; font-weight: 700; }
-  .org-line { width: 2px; height: 24px; background: rgba(255,255,255,0.1); }
-  .org-branches {
-    display: flex; gap: 20px; position: relative;
+  .oaot-left {
+    flex: 0 0 50%; display: flex; align-items: center; justify-content: center;
   }
-  .org-branches .org-connector {
-    position: absolute; top: -10px;
-    left: 10%; right: 10%; height: 2px;
-    background: rgba(255,255,255,0.1);
+  .oaot-chart {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
   }
-  .org-specialist {
-    background: rgba(239,124,0,0.08); border: 1px solid rgba(239,124,0,0.2);
-    border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 130px;
-    position: relative;
+  .oaot-level { display: flex; flex-direction: column; align-items: center; }
+  .oaot-vline { width: 2px; height: 20px; background: var(--nus-blue-glow); opacity: 0.5; }
+  .oaot-hline {
+    width: 320px; height: 2px; background: var(--nus-blue-glow); opacity: 0.5;
+    margin-bottom: 4px;
   }
-  .org-specialist .org-vert-line {
-    position: absolute; top: -12px; left: 50%;
-    width: 2px; height: 12px; background: rgba(255,255,255,0.1);
+  .oaot-hline-short { width: 200px; }
+  .oaot-node { text-align: center; }
+  .oaot-company-node { font-size: 64px; }
+  .oaot-dept-row { display: flex; gap: 24px; justify-content: center; }
+  .oaot-dept {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
   }
-  .org-specialist .org-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--nus-orange-glow); margin-bottom: 4px; }
-  .org-specialist .org-title { font-size: 16px; font-weight: 600; }
-  .org-specialist .org-tool { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-  .org-bottom-text {
-    font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.5);
-    text-align: center; margin-top: 16px;
+  .oaot-dept-vline { width: 2px; height: 12px; background: var(--nus-blue-glow); opacity: 0.5; }
+  .oaot-dept-icon { font-size: 42px; }
+  .oaot-dept-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    color: var(--nus-orange); background: rgba(239,124,0,0.15);
+    padding: 2px 10px; border-radius: 4px;
   }
+  .oaot-manager-icon { font-size: 52px; }
+  .oaot-analyst-row { display: flex; gap: 18px; justify-content: center; }
+  .oaot-analyst-icon { font-size: 40px; }
+
+  /* Right panel — orange */
+  .oaot-right {
+    flex: 0 0 50%; display: flex; align-items: center; padding-left: 20px;
+  }
+  .oaot-panel {
+    background: var(--nus-orange); border-radius: 16px;
+    padding: 28px 32px; width: 100%;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .oaot-panel-title {
+    font-size: 16px; font-weight: 800; letter-spacing: 1px;
+    color: #fff;
+  }
+  .oaot-role {
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .oaot-role-icon { font-size: 44px; flex-shrink: 0; }
+  .oaot-role-text { display: flex; flex-direction: column; gap: 4px; }
+  .oaot-role-name { font-size: 16px; font-weight: 700; color: var(--nus-blue); }
+  .oaot-role-desc { font-size: 14px; color: #fff; line-height: 1.4; }
+
+  .oaot-scale {
+    display: flex; gap: 14px; align-items: center;
+  }
+  .oaot-scale-numbers {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .oaot-scale-n {
+    background: var(--nus-blue); color: #fff; font-weight: 700;
+    font-size: 14px; width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .oaot-scale-dots { color: var(--nus-blue); font-size: 18px; line-height: 1; }
+  .oaot-scale-box {
+    background: var(--nus-blue); border-radius: 8px; padding: 10px 16px;
+    flex: 1;
+  }
+  .oaot-scale-title { font-size: 14px; font-weight: 700; color: #fff; }
 
   /* ── Slide 9: 3-Layer ── */
   .layers { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
@@ -1289,44 +1328,101 @@
   <div class="slide-content">
     <p class="subtitle" style="margin-bottom: 0;">How Organizations Scale with Separation of Concern</p>
 
-    <div class="org-chart">
-      <!-- Manager -->
-      <div class="org-manager fragment" data-fragment-index="0">
-        <div class="org-label">Orchestrator</div>
-        <div class="org-title">Manager Agent</div>
-      </div>
-      <div class="org-line fragment" data-fragment-index="0"></div>
+    <div class="oaot-layout">
+      <!-- Left 50%: Org chart with icons -->
+      <div class="oaot-left">
+        <div class="oaot-chart">
+          <!-- Level 1: Company -->
+          <div class="oaot-level oaot-company fragment" data-fragment-index="0">
+            <div class="oaot-node oaot-company-node">🏢</div>
+          </div>
 
-      <!-- Specialists -->
-      <div class="org-branches">
-        <div class="org-connector"></div>
-        <div class="org-specialist fragment" data-fragment-index="1">
-          <div class="org-vert-line"></div>
-          <div class="org-label">Agent</div>
-          <div class="org-title">HR</div>
-          <div class="org-tool">Onboarding, leave, policy</div>
-        </div>
-        <div class="org-specialist fragment" data-fragment-index="2">
-          <div class="org-vert-line"></div>
-          <div class="org-label">Agent</div>
-          <div class="org-title">IT</div>
-          <div class="org-tool">Tickets, provisioning</div>
-        </div>
-        <div class="org-specialist fragment" data-fragment-index="3">
-          <div class="org-vert-line"></div>
-          <div class="org-label">Agent</div>
-          <div class="org-title">Finance</div>
-          <div class="org-tool">Invoices, reconciliation</div>
-        </div>
-        <div class="org-specialist fragment" data-fragment-index="4">
-          <div class="org-vert-line"></div>
-          <div class="org-label">Agent</div>
-          <div class="org-title">Operations</div>
-          <div class="org-tool">Logistics, scheduling</div>
+          <!-- Connector line -->
+          <div class="oaot-vline fragment" data-fragment-index="1"></div>
+
+          <!-- Level 2: Departments -->
+          <div class="oaot-level oaot-departments fragment" data-fragment-index="1">
+            <div class="oaot-hline"></div>
+            <div class="oaot-dept-row">
+              <div class="oaot-dept">
+                <div class="oaot-dept-vline"></div>
+                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
+                <div class="oaot-dept-label">HR</div>
+              </div>
+              <div class="oaot-dept">
+                <div class="oaot-dept-vline"></div>
+                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
+                <div class="oaot-dept-label">IT</div>
+              </div>
+              <div class="oaot-dept">
+                <div class="oaot-dept-vline"></div>
+                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
+                <div class="oaot-dept-label">FC</div>
+              </div>
+              <div class="oaot-dept">
+                <div class="oaot-dept-vline"></div>
+                <div class="oaot-node oaot-dept-icon">👨‍💻</div>
+                <div class="oaot-dept-label">OPS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connector line to manager -->
+          <div class="oaot-vline fragment" data-fragment-index="2"></div>
+
+          <!-- Level 3: Manager -->
+          <div class="oaot-level oaot-manager fragment" data-fragment-index="2">
+            <div class="oaot-node oaot-manager-icon">👩‍💼💪</div>
+          </div>
+
+          <!-- Connector line to analysts -->
+          <div class="oaot-vline fragment" data-fragment-index="3"></div>
+
+          <!-- Level 4: Individual analysts -->
+          <div class="oaot-level oaot-analysts fragment" data-fragment-index="3">
+            <div class="oaot-hline oaot-hline-short"></div>
+            <div class="oaot-analyst-row">
+              <div class="oaot-node oaot-analyst-icon">🧑‍💼</div>
+              <div class="oaot-node oaot-analyst-icon">👩‍💼</div>
+              <div class="oaot-node oaot-analyst-icon">👨‍💼</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="org-bottom-text fragment" data-fragment-index="5">One Agent. One Tool. Clear scope. Clear boundaries.</div>
+      <!-- Right 50%: Orange explanation panel -->
+      <div class="oaot-right fragment" data-fragment-index="4">
+        <div class="oaot-panel">
+          <div class="oaot-panel-title">ONE AGENT ONE TOOL AGENTIC ORGANISATION DESIGN PRINCIPLE</div>
+
+          <div class="oaot-role">
+            <div class="oaot-role-icon">🤖</div>
+            <div class="oaot-role-text">
+              <div class="oaot-role-name">Manager/Task Orchestrator</div>
+              <div class="oaot-role-desc">Receives task/request, plans &amp; triages what to do, knows capabilities of team members</div>
+            </div>
+          </div>
+
+          <div class="oaot-scale">
+            <div class="oaot-scale-numbers">
+              <span class="oaot-scale-n">1</span>
+              <span class="oaot-scale-dots">⋮</span>
+              <span class="oaot-scale-n">n</span>
+            </div>
+            <div class="oaot-scale-box">
+              <div class="oaot-scale-title">WHAT IS THE RIGHT TEAM SIZE?</div>
+            </div>
+          </div>
+
+          <div class="oaot-role">
+            <div class="oaot-role-icon">🤖</div>
+            <div class="oaot-role-text">
+              <div class="oaot-role-name">Team Member/Workflow Executor</div>
+              <div class="oaot-role-desc">Receives curated tasks and context, plans based on context &amp; available tool</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
