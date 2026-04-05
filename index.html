@@ -783,8 +783,11 @@
     width: 340px; height: 400px;
   }
   .mono-dead-face {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -70%);
-    font-size: 160px; z-index: 10; opacity: 0;
+    position: absolute;
+    /* Align with agent head — head is roughly top 8-56 of viewBox 120,
+       so center of head ≈ 27% from top. Icon is 400px tall. */
+    top: 18%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 140px; z-index: 10; opacity: 0;
     transition: opacity 0.5s ease;
     filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
   }
@@ -792,15 +795,20 @@
 
   .mono-right {
     flex: 0 0 45%; display: flex; flex-direction: column;
-    justify-content: center; gap: 18px; padding-right: 40px;
+    justify-content: flex-start; gap: 10px; padding-right: 40px; padding-top: 20px;
   }
   .mono-task {
-    display: flex; align-items: center; gap: 14px;
-    font-size: 20px; font-weight: 500; color: rgba(255,255,255,0.7);
-    background: rgba(255,255,255,0.04); padding: 12px 18px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 17px; font-weight: 500; color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.04); padding: 10px 16px;
     border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);
+    opacity: 0; transform: translateX(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .mono-task-icon { font-size: 28px; flex-shrink: 0; }
+  .mono-task.show {
+    opacity: 1; transform: translateX(0);
+  }
+  .mono-task-icon { font-size: 22px; flex-shrink: 0; }
   .mono-fail {
     text-align: center; margin-top: 20px;
     font-size: 28px; font-weight: 800; color: var(--nus-orange);
@@ -1272,34 +1280,40 @@
           <line x1="60" y1="98" x2="62" y2="114" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
           <line x1="56" y1="114" x2="64" y2="114" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <!-- Dead face overlay — appears on final click -->
-        <div class="mono-dead-face fragment" data-fragment-index="6" id="monoDeadFace">😵</div>
+        <!-- Dead face overlay — aligned with agent head, appears on click -->
+        <div class="mono-dead-face fragment" data-fragment-index="0" id="monoDeadFace">😵</div>
       </div>
 
-      <!-- Right half: Tasks appearing one by one -->
-      <div class="mono-right">
-        <div class="mono-task fragment" data-fragment-index="0">
-          <span class="mono-task-icon">💪</span> Listen to emails
+      <!-- Right half: Tasks auto-animate one by one -->
+      <div class="mono-right" id="monoTaskList">
+        <div class="mono-task mono-auto-task" data-delay="0">
+          <span class="mono-task-icon">💪</span> Get PDF
         </div>
-        <div class="mono-task fragment" data-fragment-index="1">
-          <span class="mono-task-icon">💪</span> Validate inputs
+        <div class="mono-task mono-auto-task" data-delay="600">
+          <span class="mono-task-icon">💪</span> Read PDF
         </div>
-        <div class="mono-task fragment" data-fragment-index="2">
-          <span class="mono-task-icon">💪</span> Deploy resources
+        <div class="mono-task mono-auto-task" data-delay="1200">
+          <span class="mono-task-icon">💪</span> Classify Documents by page range
         </div>
-        <div class="mono-task fragment" data-fragment-index="3">
-          <span class="mono-task-icon">💪</span> Answer questions
+        <div class="mono-task mono-auto-task" data-delay="1800">
+          <span class="mono-task-icon">💪</span> Split into individual Documents
         </div>
-        <div class="mono-task fragment" data-fragment-index="4">
-          <span class="mono-task-icon">💪</span> Troubleshoot issues
+        <div class="mono-task mono-auto-task" data-delay="2400">
+          <span class="mono-task-icon">💪</span> Extract Document Number
         </div>
-        <div class="mono-task fragment" data-fragment-index="5">
-          <span class="mono-task-icon">💪</span> Inform admin
+        <div class="mono-task mono-auto-task" data-delay="3000">
+          <span class="mono-task-icon">💪</span> Validate if Document Number exists
+        </div>
+        <div class="mono-task mono-auto-task" data-delay="3600">
+          <span class="mono-task-icon">💪</span> Archive Document
+        </div>
+        <div class="mono-task mono-auto-task" data-delay="4200">
+          <span class="mono-task-icon">💪</span> Insert URL in System
         </div>
       </div>
     </div>
 
-    <div class="mono-fail fragment" data-fragment-index="6">This doesn't scale.</div>
+    <div class="mono-fail fragment" data-fragment-index="0">This doesn't scale.</div>
   </div>
 </section>
 
@@ -1617,15 +1631,35 @@
     }
   });
 
-  // Trigger doc-process animations when slide becomes active
+  // Trigger animations when slide becomes active
   Reveal.on('slidechanged', function(event) {
     const docProcess = event.currentSlide.querySelector('.doc-process');
     if (docProcess) {
       docProcess.classList.remove('animate');
-      // Force reflow to restart animations
       void docProcess.offsetWidth;
       setTimeout(() => docProcess.classList.add('animate'), 100);
     }
+
+    // Monolith slide: auto-animate tasks one by one when slide appears
+    const monoTasks = event.currentSlide.querySelectorAll('.mono-auto-task');
+    if (monoTasks.length > 0) {
+      // Reset all tasks
+      monoTasks.forEach(t => t.classList.remove('show'));
+      // Stagger them in
+      monoTasks.forEach(task => {
+        const delay = parseInt(task.getAttribute('data-delay') || '0');
+        setTimeout(() => task.classList.add('show'), delay + 300);
+      });
+    }
+
+    // Reset monolith tasks when leaving the slide
+    const prevMonoTasks = event.previousSlide?.querySelectorAll('.mono-auto-task');
+    if (prevMonoTasks) {
+      prevMonoTasks.forEach(t => t.classList.remove('show'));
+    }
+    // Reset dead face
+    const prevDeadFace = event.previousSlide?.querySelector('#monoDeadFace');
+    if (prevDeadFace) prevDeadFace.classList.remove('visible');
   });
 
   // Auto-generate slide backgrounds and headers
