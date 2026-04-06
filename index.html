@@ -905,40 +905,121 @@
   }
   .oaot-scale-dots { color: var(--nus-blue); font-size: 16px; line-height: 1; }
 
-  /* ── Slide 9: 3-Layer ── */
-  .layers { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-  .layer-bar {
-    display: flex; align-items: center; gap: 20px;
-    padding: 24px 28px; border-radius: 14px;
+  /* ── Slide 8: 3-Layer Agentic Architecture ── */
+  .tla-container {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 16px;
+    position: relative;
   }
-  .layer-hook {
+  .tla-layer {
+    border-radius: 12px; padding: 14px 20px; position: relative;
+  }
+  .tla-hook {
     background: rgba(21,101,192,0.1); border: 1px solid rgba(21,101,192,0.25);
   }
-  .layer-queue {
+  .tla-queue {
     background: linear-gradient(90deg, rgba(21,101,192,0.08), rgba(239,124,0,0.06));
     border: 1px solid rgba(255,255,255,0.08);
   }
-  .layer-agent {
+  .tla-agents {
     background: rgba(239,124,0,0.08); border: 1px solid rgba(239,124,0,0.2);
   }
-  .layer-icon {
-    width: 48px; height: 48px; border-radius: 12px;
+  .tla-layer-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tla-label-blue { color: var(--nus-blue-glow); }
+  .tla-label-mid { color: rgba(255,255,255,0.5); }
+  .tla-label-orange { color: var(--nus-orange-glow); }
+  .tla-layer-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 8px;
+  }
+
+  /* Hook layer triggers */
+  .tla-triggers {
+    display: flex; gap: 24px; align-items: center; justify-content: center;
+  }
+  .tla-trigger {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    opacity: 0.4; transition: opacity 0.4s, transform 0.4s;
+  }
+  .tla-trigger.active {
+    opacity: 1; transform: scale(1.15);
+  }
+  .tla-trigger-icon { width: 36px; height: 36px; object-fit: contain; }
+  .tla-invert { filter: invert(1); }
+  .tla-trigger-name { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; }
+
+  /* Queue layer */
+  .tla-queues { display: flex; gap: 12px; }
+  .tla-queue-box {
+    flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 8px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .tla-queue-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); }
+  .tla-shapes { display: flex; gap: 10px; align-items: center; }
+  .tla-shape {
+    width: 18px; height: 18px; opacity: 0.2; transition: opacity 0.4s, box-shadow 0.4s;
+  }
+  .tla-shape.active { opacity: 1; }
+  .tla-shape-circle {
+    border-radius: 50%; background: var(--nus-blue-glow);
+  }
+  .tla-shape-circle.active { box-shadow: 0 0 10px var(--nus-blue-glow); }
+  .tla-shape-triangle {
+    width: 0; height: 0; background: none;
+    border-left: 9px solid transparent; border-right: 9px solid transparent;
+    border-bottom: 18px solid var(--nus-orange);
+  }
+  .tla-shape-triangle.active { filter: drop-shadow(0 0 6px var(--nus-orange)); }
+  .tla-shape-rect {
+    border-radius: 3px; background: rgba(255,255,255,0.6);
+  }
+  .tla-shape-rect.active { box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  .tla-shape-diamond {
+    background: var(--nus-orange); transform: rotate(45deg);
+    width: 14px; height: 14px;
+  }
+  .tla-shape-diamond.active { box-shadow: 0 0 10px var(--nus-orange); }
+
+  /* Agent layer */
+  .tla-agent-row {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    flex-wrap: nowrap;
+  }
+  .tla-agent {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    opacity: 0.3; transition: opacity 0.4s, transform 0.4s;
+  }
+  .tla-agent.active {
+    opacity: 1; transform: scale(1.1);
+  }
+  .tla-agent-icon { width: 40px; height: 40px; object-fit: contain; }
+  .tla-agent-lg { width: 52px; height: 52px; }
+  .tla-agent-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
+  .tla-op {
+    font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.15);
+    transition: color 0.4s;
+  }
+  .tla-op.active { color: rgba(255,255,255,0.6); }
+  .tla-result-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(76,175,80,0.2); border: 2px solid rgba(76,175,80,0.5);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    font-size: 20px; color: #4CAF50;
   }
-  .layer-hook .layer-icon { background: rgba(21,101,192,0.2); }
-  .layer-queue .layer-icon { background: rgba(255,255,255,0.05); }
-  .layer-agent .layer-icon { background: rgba(239,124,0,0.15); }
-  .layer-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
-  .layer-hook .layer-label { color: var(--nus-blue-glow); }
-  .layer-queue .layer-label { color: rgba(255,255,255,0.5); }
-  .layer-agent .layer-label { color: var(--nus-orange-glow); }
-  .layer-title { font-size: 22px; font-weight: 700; }
-  .layer-desc { font-size: 15px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-  .layer-arrow {
-    text-align: center; color: rgba(255,255,255,0.15); font-size: 20px;
-    margin: -8px 0;
+  .tla-agent-result.active .tla-result-icon {
+    background: rgba(76,175,80,0.4); box-shadow: 0 0 16px rgba(76,175,80,0.5);
   }
+
+  /* Flow dot */
+  .tla-dot {
+    position: absolute; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--nus-orange); box-shadow: 0 0 12px var(--nus-orange);
+    opacity: 0; z-index: 10; pointer-events: none;
+    transition: none;
+  }
+  .tla-dot.visible { opacity: 1; }
 
   /* ── Slide 10: KPIs ── */
   .kpi-cards { display: flex; gap: 28px; margin-top: 40px; }
@@ -1453,44 +1534,94 @@
   <div class="slide-content">
     <p class="subtitle" style="margin-bottom: 0;">Scaling of Agents &amp; Enablement of A2A Communications while introducing robust guardrails &amp; observability.</p>
 
-    <div class="layers">
-      <!-- Hook Layer -->
-      <div class="layer-bar layer-hook fragment" data-fragment-index="0">
-        <div class="layer-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28"><path d="M4 8 L14 2 L24 8 L24 20 L14 26 L4 20Z" stroke="var(--nus-blue-glow)" stroke-width="1.5" fill="none"/><circle cx="14" cy="14" r="4" fill="var(--nus-blue-glow)" opacity="0.3"/></svg>
-        </div>
-        <div>
-          <div class="layer-label">Hook Layer</div>
-          <div class="layer-title">Ingest</div>
-          <div class="layer-desc">Webhooks, Timers, Events, HTTP Triggers</div>
+    <div class="tla-container">
+      <!-- ── Hook Layer ── -->
+      <div class="tla-layer tla-hook">
+        <div class="tla-layer-label tla-label-blue">Hook Layer</div>
+        <div class="tla-layer-title">Ingest</div>
+        <div class="tla-triggers">
+          <div class="tla-trigger" data-idx="0">
+            <img src="stopwatch-timer.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Timer</span>
+          </div>
+          <div class="tla-trigger" data-idx="1">
+            <img src="azure-functions.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">HTTP</span>
+          </div>
+          <div class="tla-trigger" data-idx="2">
+            <img src="gmail-logo.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Email</span>
+          </div>
+          <div class="tla-trigger" data-idx="3">
+            <img src="connector-plug.png" class="tla-trigger-icon tla-invert">
+            <span class="tla-trigger-name">Webhook</span>
+          </div>
+          <div class="tla-trigger" data-idx="4">
+            <img src="gemini-sparkle.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Event</span>
+          </div>
         </div>
       </div>
 
-      <div class="layer-arrow fragment" data-fragment-index="0">&darr;</div>
+      <!-- Flow dot (animated) -->
+      <div class="tla-dot" id="tlaDot"></div>
 
-      <!-- Message Queue Layer -->
-      <div class="layer-bar layer-queue fragment" data-fragment-index="1">
-        <div class="layer-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28"><rect x="2" y="8" width="24" height="4" rx="2" fill="rgba(255,255,255,0.15)"/><rect x="2" y="16" width="24" height="4" rx="2" fill="rgba(255,255,255,0.1)"/><path d="M14 4 L14 8 M14 20 L14 24" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>
-        </div>
-        <div>
-          <div class="layer-label">Message Queue Layer</div>
-          <div class="layer-title">Route</div>
-          <div class="layer-desc">Service Bus, Event Grid, Message Routing</div>
+      <!-- ── Message Queue Layer ── -->
+      <div class="tla-layer tla-queue">
+        <div class="tla-layer-label tla-label-mid">Message Queue Layer</div>
+        <div class="tla-layer-title">Route</div>
+        <div class="tla-queues">
+          <div class="tla-queue-box tla-queue-workflow">
+            <span class="tla-queue-name">Agent Workflow Queue</span>
+            <div class="tla-shapes">
+              <div class="tla-shape tla-shape-circle" data-idx="0"></div>
+              <div class="tla-shape tla-shape-triangle" data-idx="1"></div>
+              <div class="tla-shape tla-shape-rect" data-idx="2"></div>
+            </div>
+          </div>
+          <div class="tla-queue-box tla-queue-mail">
+            <span class="tla-queue-name">Mail Queue</span>
+            <div class="tla-shapes">
+              <div class="tla-shape tla-shape-diamond" data-idx="3"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="layer-arrow fragment" data-fragment-index="1">&darr;</div>
-
-      <!-- Agent Layer -->
-      <div class="layer-bar layer-agent fragment" data-fragment-index="2">
-        <div class="layer-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="4" width="20" height="20" rx="6" stroke="var(--nus-orange)" stroke-width="1.5" fill="none"/><circle cx="11" cy="13" r="2.5" fill="var(--nus-orange)" opacity="0.5"/><circle cx="17" cy="13" r="2.5" fill="var(--nus-orange)" opacity="0.5"/><path d="M10 19 Q14 22 18 19" stroke="var(--nus-orange)" stroke-width="1" fill="none" opacity="0.4"/></svg>
-        </div>
-        <div>
-          <div class="layer-label">Agent Layer</div>
-          <div class="layer-title">Execute</div>
-          <div class="layer-desc">Orchestrators, Specialist Agents, MCP Tools</div>
+      <!-- ── Agent Layer ── -->
+      <div class="tla-layer tla-agents">
+        <div class="tla-layer-label tla-label-orange">Agent Layer</div>
+        <div class="tla-layer-title">Execute</div>
+        <div class="tla-agent-row">
+          <div class="tla-agent" data-idx="0">
+            <img src="ai-robot.png" class="tla-agent-icon tla-agent-lg">
+            <span class="tla-agent-name">Orchestrator</span>
+          </div>
+          <span class="tla-op">+</span>
+          <div class="tla-agent" data-idx="1">
+            <img src="task-config-gear.png" class="tla-agent-icon">
+            <span class="tla-agent-name">Planner</span>
+          </div>
+          <span class="tla-op">+</span>
+          <div class="tla-agent" data-idx="2">
+            <img src="gemini-sparkle.png" class="tla-agent-icon">
+            <span class="tla-agent-name">LLM</span>
+          </div>
+          <span class="tla-op">+</span>
+          <div class="tla-agent" data-idx="3">
+            <img src="sap-logo.png" class="tla-agent-icon">
+            <span class="tla-agent-name">SAP</span>
+          </div>
+          <span class="tla-op">+</span>
+          <div class="tla-agent" data-idx="4">
+            <img src="database.png" class="tla-agent-icon">
+            <span class="tla-agent-name">Store</span>
+          </div>
+          <span class="tla-op">=</span>
+          <div class="tla-agent tla-agent-result" data-idx="5">
+            <div class="tla-result-icon">&#10003;</div>
+            <span class="tla-agent-name">Result</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1738,6 +1869,114 @@
     }
   });
 
+  // ── 3-Layer Animation Engine ──
+  let tlaInterval = null;
+  function startTlaAnimation(slide) {
+    const container = slide.querySelector('.tla-container');
+    if (!container) return;
+    const dot = container.querySelector('.tla-dot');
+    const triggers = container.querySelectorAll('.tla-trigger');
+    const shapes = container.querySelectorAll('.tla-shape');
+    const agents = container.querySelectorAll('.tla-agent');
+    const ops = container.querySelectorAll('.tla-op');
+    let cycle = 0;
+
+    // Agent activation patterns per cycle (which agents light up)
+    const agentPatterns = [
+      [0,1,2,5],       // Orchestrator + Planner + LLM → Result
+      [0,1,3,5],       // Orchestrator + Planner + SAP → Result
+      [0,2,4,5],       // Orchestrator + LLM + Store → Result
+      [0,1,2,3,4,5],   // All agents → Result
+      [0,1,4,5],       // Orchestrator + Planner + Store → Result
+    ];
+
+    function resetAll() {
+      triggers.forEach(t => t.classList.remove('active'));
+      shapes.forEach(s => s.classList.remove('active'));
+      agents.forEach(a => a.classList.remove('active'));
+      ops.forEach(o => o.classList.remove('active'));
+      dot.classList.remove('visible');
+    }
+
+    function runCycle() {
+      resetAll();
+      const trigIdx = cycle % triggers.length;
+      const shapeIdx = cycle % shapes.length;
+      const pattern = agentPatterns[cycle % agentPatterns.length];
+
+      // Get positions for dot animation
+      const cRect = container.getBoundingClientRect();
+      const trig = triggers[trigIdx];
+      const tRect = trig.getBoundingClientRect();
+      const hookLayer = container.querySelector('.tla-hook');
+      const queueLayer = container.querySelector('.tla-queue');
+      const agentLayer = container.querySelector('.tla-agents');
+
+      // Phase 1: Trigger highlights (0ms)
+      trig.classList.add('active');
+
+      // Phase 2: Dot appears at trigger, drops to queue (400ms)
+      setTimeout(() => {
+        dot.style.transition = 'none';
+        dot.style.left = (tRect.left - cRect.left + tRect.width/2 - 5) + 'px';
+        dot.style.top = (tRect.bottom - cRect.top) + 'px';
+        dot.classList.add('visible');
+
+        // Animate dot down to queue
+        setTimeout(() => {
+          dot.style.transition = 'top 0.5s ease-in, left 0.3s ease';
+          const qRect = queueLayer.getBoundingClientRect();
+          dot.style.top = (qRect.top - cRect.top + qRect.height/2 - 5) + 'px';
+          dot.style.left = (qRect.left - cRect.left + qRect.width * 0.4) + 'px';
+        }, 50);
+      }, 400);
+
+      // Phase 3: Shape lights up in queue (1000ms)
+      setTimeout(() => {
+        shapes[shapeIdx].classList.add('active');
+      }, 1000);
+
+      // Phase 4: Dot drops to agent layer (1400ms)
+      setTimeout(() => {
+        const aRect = agentLayer.getBoundingClientRect();
+        dot.style.transition = 'top 0.5s ease-in, left 0.3s ease';
+        dot.style.top = (aRect.top - cRect.top + 20) + 'px';
+        dot.style.left = (aRect.left - cRect.left + aRect.width * 0.3) + 'px';
+      }, 1400);
+
+      // Phase 5: Agents light up sequentially (2000ms)
+      setTimeout(() => {
+        dot.classList.remove('visible');
+        let delay = 0;
+        pattern.forEach((agentIdx, i) => {
+          setTimeout(() => {
+            agents[agentIdx].classList.add('active');
+            // Light up ops between active agents
+            if (agentIdx < ops.length) ops[agentIdx].classList.add('active');
+            if (agentIdx > 0 && agentIdx - 1 < ops.length) ops[agentIdx - 1].classList.add('active');
+          }, delay);
+          delay += 200;
+        });
+      }, 2000);
+
+      // Phase 6: All ops active, result glows (3200ms)
+      setTimeout(() => {
+        ops.forEach(o => o.classList.add('active'));
+      }, 3200);
+
+      cycle++;
+    }
+
+    // Initial run after a short delay
+    setTimeout(runCycle, 500);
+    // Repeat every 4.5s
+    tlaInterval = setInterval(runCycle, 4500);
+  }
+
+  function stopTlaAnimation() {
+    if (tlaInterval) { clearInterval(tlaInterval); tlaInterval = null; }
+  }
+
   // Trigger animations when slide becomes active
   Reveal.on('slidechanged', function(event) {
     const docProcess = event.currentSlide.querySelector('.doc-process');
@@ -1772,6 +2011,12 @@
     // Reset org chart when leaving the slide
     const prevOaot = event.previousSlide?.querySelectorAll('.oaot-auto');
     if (prevOaot) prevOaot.forEach(el => el.classList.remove('show'));
+
+    // 3-Layer: start animation when entering, stop when leaving
+    stopTlaAnimation();
+    if (event.currentSlide.querySelector('.tla-container')) {
+      startTlaAnimation(event.currentSlide);
+    }
 
     // Reset monolith tasks when leaving the slide
     const prevMonoTasks = event.previousSlide?.querySelectorAll('.mono-auto-task');
