@@ -940,9 +940,10 @@
   }
   .tla-trigger {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
-    opacity: 0.4; transition: opacity 0.4s, transform 0.4s;
+    transition: opacity 0.4s, transform 0.4s;
   }
-  .tla-trigger.active {
+  .tla-container.animating .tla-trigger { opacity: 0.4; }
+  .tla-container.animating .tla-trigger.active {
     opacity: 1; transform: scale(1.15);
   }
   .tla-trigger-icon { width: 36px; height: 36px; object-fit: contain; }
@@ -989,9 +990,10 @@
   }
   .tla-agent {
     display: flex; flex-direction: column; align-items: center; gap: 3px;
-    opacity: 0.3; transition: opacity 0.4s, transform 0.4s;
+    transition: opacity 0.4s, transform 0.4s;
   }
-  .tla-agent.active {
+  .tla-container.animating .tla-agent { opacity: 0.3; }
+  .tla-container.animating .tla-agent.active {
     opacity: 1; transform: scale(1.1);
   }
   .tla-agent-icon { width: 40px; height: 40px; object-fit: contain; }
@@ -1536,40 +1538,44 @@
 
     <div class="tla-container">
       <!-- ── Hook Layer ── -->
-      <div class="tla-layer tla-hook">
-        <div class="tla-layer-label tla-label-blue">Hook Layer</div>
-        <div class="tla-layer-title">Ingest</div>
+      <div class="tla-layer tla-hook fragment" data-fragment-index="0">
+        <div class="tla-layer-header">
+          <div class="tla-layer-label tla-label-blue">Hook Layer</div>
+          <div class="tla-layer-title">Ingest</div>
+        </div>
         <div class="tla-triggers">
-          <div class="tla-trigger" data-idx="0">
-            <img src="stopwatch-timer.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Timer</span>
-          </div>
-          <div class="tla-trigger" data-idx="1">
-            <img src="azure-functions.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">HTTP</span>
-          </div>
-          <div class="tla-trigger" data-idx="2">
+          <div class="tla-trigger fragment" data-fragment-index="1" data-idx="0">
             <img src="gmail-logo.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Email</span>
+            <span class="tla-trigger-name">Mail</span>
           </div>
-          <div class="tla-trigger" data-idx="3">
+          <div class="tla-trigger fragment" data-fragment-index="2" data-idx="1">
+            <img src="teams-icon.svg" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Teams</span>
+          </div>
+          <div class="tla-trigger fragment" data-fragment-index="3" data-idx="2">
+            <img src="stopwatch-timer.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Time Trigger</span>
+          </div>
+          <div class="tla-trigger fragment" data-fragment-index="4" data-idx="3">
+            <img src="document-scanner.png" class="tla-trigger-icon">
+            <span class="tla-trigger-name">Document / Event</span>
+          </div>
+          <div class="tla-trigger fragment" data-fragment-index="5" data-idx="4">
             <img src="connector-plug.png" class="tla-trigger-icon tla-invert">
             <span class="tla-trigger-name">Webhook</span>
-          </div>
-          <div class="tla-trigger" data-idx="4">
-            <img src="gemini-sparkle.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Event</span>
           </div>
         </div>
       </div>
 
-      <!-- Flow dot (animated) -->
+      <!-- Flow dot (animated — used later) -->
       <div class="tla-dot" id="tlaDot"></div>
 
       <!-- ── Message Queue Layer ── -->
-      <div class="tla-layer tla-queue">
-        <div class="tla-layer-label tla-label-mid">Message Queue Layer</div>
-        <div class="tla-layer-title">Route</div>
+      <div class="tla-layer tla-queue fragment" data-fragment-index="6">
+        <div class="tla-layer-header">
+          <div class="tla-layer-label tla-label-mid">Message Queue Layer</div>
+          <div class="tla-layer-title">Route</div>
+        </div>
         <div class="tla-queues">
           <div class="tla-queue-box tla-queue-workflow">
             <span class="tla-queue-name">Agent Workflow Queue</span>
@@ -1589,9 +1595,11 @@
       </div>
 
       <!-- ── Agent Layer ── -->
-      <div class="tla-layer tla-agents">
-        <div class="tla-layer-label tla-label-orange">Agent Layer</div>
-        <div class="tla-layer-title">Execute</div>
+      <div class="tla-layer tla-agents fragment" data-fragment-index="7">
+        <div class="tla-layer-header">
+          <div class="tla-layer-label tla-label-orange">Agent Layer</div>
+          <div class="tla-layer-title">Execute</div>
+        </div>
         <div class="tla-agent-row">
           <div class="tla-agent" data-idx="0">
             <img src="ai-robot.png" class="tla-agent-icon tla-agent-lg">
@@ -1747,6 +1755,15 @@
     if (el.classList.contains('fw-card')) {
       el.classList.add('active-card');
     }
+    // 3-Layer: start animation loop when agent layer (last layer) appears
+    if (el.classList.contains('tla-agents')) {
+      const container = el.closest('.tla-container');
+      if (container) {
+        container.classList.add('animating');
+        startTlaAnimation(el.closest('section'));
+      }
+    }
+
     // Speech bubble delayed elements: auto-fade after parent fragment appears
     const fragIndex = el.getAttribute('data-fragment-index');
     if (fragIndex !== null) {
@@ -1824,6 +1841,13 @@
     if (el.id === 'monoDeadFace') {
       el.classList.remove('visible');
     }
+    // 3-Layer: stop animation when going back past agent layer
+    if (el.classList.contains('tla-agents')) {
+      stopTlaAnimation();
+      const container = el.closest('.tla-container');
+      if (container) container.classList.remove('animating');
+    }
+
     // Reset delayed elements when fragment hidden
     el.querySelectorAll('.oaot-delayed').forEach(d => d.classList.remove('show'));
     if (el.classList.contains('fw-card')) {
@@ -2012,11 +2036,10 @@
     const prevOaot = event.previousSlide?.querySelectorAll('.oaot-auto');
     if (prevOaot) prevOaot.forEach(el => el.classList.remove('show'));
 
-    // 3-Layer: start animation when entering, stop when leaving
+    // 3-Layer: stop animation when leaving slide
     stopTlaAnimation();
-    if (event.currentSlide.querySelector('.tla-container')) {
-      startTlaAnimation(event.currentSlide);
-    }
+    const prevTla = event.previousSlide?.querySelector('.tla-container');
+    if (prevTla) prevTla.classList.remove('animating');
 
     // Reset monolith tasks when leaving the slide
     const prevMonoTasks = event.previousSlide?.querySelectorAll('.mono-auto-task');
