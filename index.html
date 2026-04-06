@@ -949,6 +949,13 @@
   .tla-trigger-icon { width: 36px; height: 36px; object-fit: contain; }
   .tla-invert { filter: invert(1); }
   .tla-trigger-name { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .tla-hook-auto {
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .tla-hook-auto.show {
+    opacity: 1; transform: translateY(0);
+  }
 
   /* Queue layer */
   .tla-queues { display: flex; gap: 12px; }
@@ -1541,28 +1548,27 @@
       <div class="tla-layer tla-hook fragment" data-fragment-index="0">
         <div class="tla-layer-header">
           <div class="tla-layer-label tla-label-blue">Hook Layer</div>
-          <div class="tla-layer-title">Ingest</div>
+          <div class="tla-layer-title">Invocation</div>
         </div>
         <div class="tla-triggers">
           <div class="tla-trigger fragment" data-fragment-index="1" data-idx="0">
+            <img src="terminal-prompt.png" class="tla-trigger-icon">
+          </div>
+          <span class="fragment tla-hooks-trigger" data-fragment-index="2" style="display:none;"></span>
+          <div class="tla-trigger tla-hook-auto" data-delay="0" data-idx="1">
             <img src="gmail-logo.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Mail</span>
           </div>
-          <div class="tla-trigger fragment" data-fragment-index="2" data-idx="1">
+          <div class="tla-trigger tla-hook-auto" data-delay="300" data-idx="2">
             <img src="teams-icon.svg" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Teams</span>
           </div>
-          <div class="tla-trigger fragment" data-fragment-index="3" data-idx="2">
+          <div class="tla-trigger tla-hook-auto" data-delay="600" data-idx="3">
             <img src="stopwatch-timer.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Time Trigger</span>
           </div>
-          <div class="tla-trigger fragment" data-fragment-index="4" data-idx="3">
+          <div class="tla-trigger tla-hook-auto" data-delay="900" data-idx="4">
             <img src="document-scanner.png" class="tla-trigger-icon">
-            <span class="tla-trigger-name">Document / Event</span>
           </div>
-          <div class="tla-trigger fragment" data-fragment-index="5" data-idx="4">
+          <div class="tla-trigger tla-hook-auto" data-delay="1200" data-idx="5">
             <img src="connector-plug.png" class="tla-trigger-icon tla-invert">
-            <span class="tla-trigger-name">Webhook</span>
           </div>
         </div>
       </div>
@@ -1571,7 +1577,7 @@
       <div class="tla-dot" id="tlaDot"></div>
 
       <!-- ── Message Queue Layer ── -->
-      <div class="tla-layer tla-queue fragment" data-fragment-index="6">
+      <div class="tla-layer tla-queue fragment" data-fragment-index="3">
         <div class="tla-layer-header">
           <div class="tla-layer-label tla-label-mid">Message Queue Layer</div>
           <div class="tla-layer-title">Route</div>
@@ -1595,7 +1601,7 @@
       </div>
 
       <!-- ── Agent Layer ── -->
-      <div class="tla-layer tla-agents fragment" data-fragment-index="7">
+      <div class="tla-layer tla-agents fragment" data-fragment-index="4">
         <div class="tla-layer-header">
           <div class="tla-layer-label tla-label-orange">Agent Layer</div>
           <div class="tla-layer-title">Execute</div>
@@ -1755,6 +1761,14 @@
     if (el.classList.contains('fw-card')) {
       el.classList.add('active-card');
     }
+    // 3-Layer: auto-stagger remaining hooks when trigger fragment appears
+    if (el.classList.contains('tla-hooks-trigger')) {
+      el.closest('.tla-hook').querySelectorAll('.tla-hook-auto').forEach(h => {
+        const delay = parseInt(h.getAttribute('data-delay') || '0');
+        setTimeout(() => h.classList.add('show'), delay + 100);
+      });
+    }
+
     // 3-Layer: start animation loop when agent layer (last layer) appears
     if (el.classList.contains('tla-agents')) {
       const container = el.closest('.tla-container');
@@ -1841,6 +1855,11 @@
     if (el.id === 'monoDeadFace') {
       el.classList.remove('visible');
     }
+    // 3-Layer: hide auto hooks when going back
+    if (el.classList.contains('tla-hooks-trigger')) {
+      el.closest('.tla-hook').querySelectorAll('.tla-hook-auto').forEach(h => h.classList.remove('show'));
+    }
+
     // 3-Layer: stop animation when going back past agent layer
     if (el.classList.contains('tla-agents')) {
       stopTlaAnimation();
