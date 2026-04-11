@@ -1798,12 +1798,8 @@
       <span class="fragment tla-ex-step" data-fragment-index="18" data-step="5" style="display:none;"></span>
       <span class="fragment tla-ex-step" data-fragment-index="19" data-step="6" style="display:none;"></span>
       <span class="fragment tla-ex-step" data-fragment-index="20" data-step="7" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="21" data-step="8"  style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="22" data-step="9"  style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="23" data-step="10" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="24" data-step="11" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="25" data-step="12" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="26" data-step="13" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="21" data-step="8" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="22" data-step="9" style="display:none;"></span>
     </div>
   </div>
 </section>
@@ -2135,11 +2131,6 @@
   }
 
   // ── 3-Layer Example Phase ──
-  // Hide/show an agent-row element both via class (for the fade transition)
-  // and via !important inline style (belt-and-suspenders override of Reveal.js).
-  function tlaDim(el)   { if (!el) return; el.classList.add('tla-ex-dim');    el.style.setProperty('opacity', '0', 'important'); el.style.setProperty('visibility', 'hidden', 'important'); }
-  function tlaUndim(el) { if (!el) return; el.classList.remove('tla-ex-dim'); el.style.removeProperty('opacity'); el.style.removeProperty('visibility'); }
-
   function tlaExampleApply(slide, step, forward) {
     const container = slide.querySelector('.tla-container');
     if (!container) return;
@@ -2164,59 +2155,43 @@
       case 6: placeholders[3] && placeholders[3].classList[op]('filled'); break;
       case 7: placeholders[4] && placeholders[4].classList[op]('filled'); break;
       case 8:
-        // Handoff: hook postfades, manager clears, whole agent row hides,
-        // worker triangle lights up, container switches to iter2.
+        // Handoff: empty out placeholders (remove .filled) but keep boxes,
+        // avatar, and ops visible. Avatar stops pulsing. Worker triangle lights up.
+        // Container flips to iter-2 so step 9 re-fills show iter2 icons.
         if (forward) {
           hook && hook.classList.remove('tla-ex-mode');
           hook && hook.classList.add('tla-ex-postfade');
           mgrQueue && mgrQueue.classList.remove('tla-ex-active');
           avatar && avatar.classList.remove('tla-ex-pulse');
-          tlaDim(avatar);
-          placeholders.forEach(tlaDim);
-          agentOps.forEach(tlaDim);
+          placeholders.forEach(p => p.classList.remove('filled'));
           workerTri && workerTri.classList.add('tla-ex-active');
           container.classList.add('tla-iter-2');
         } else {
           hook && hook.classList.remove('tla-ex-postfade');
           hook && hook.classList.add('tla-ex-mode');
           mgrQueue && mgrQueue.classList.add('tla-ex-active');
-          tlaUndim(avatar);
           avatar && avatar.classList.add('tla-ex-pulse');
-          placeholders.forEach(tlaUndim);
-          agentOps.forEach(tlaUndim);
+          placeholders.forEach(p => p.classList.add('filled'));  // restore iter1 fill
           workerTri && workerTri.classList.remove('tla-ex-active');
           container.classList.remove('tla-iter-2');
         }
         break;
       case 9:
-        // Iter2 click 1: avatar un-hides + pulses, Objective pair un-hides
+        // Iter2 auto-stagger: single click, 5 placeholders fill in sequence over ~2s.
         if (forward) {
-          tlaUndim(avatar);
-          avatar && avatar.classList.add('tla-ex-pulse');
-          tlaUndim(agentOps[0]);
-          tlaUndim(placeholders[0]);
+          const _ph = placeholders, _av = avatar;
+          setTimeout(() => {
+            _av && _av.classList.add('tla-ex-pulse');
+            _ph[0] && _ph[0].classList.add('filled');
+          }, 0);
+          setTimeout(() => _ph[1] && _ph[1].classList.add('filled'),  400);
+          setTimeout(() => _ph[2] && _ph[2].classList.add('filled'),  800);
+          setTimeout(() => _ph[3] && _ph[3].classList.add('filled'), 1200);
+          setTimeout(() => _ph[4] && _ph[4].classList.add('filled'), 1600);
         } else {
           avatar && avatar.classList.remove('tla-ex-pulse');
-          tlaDim(avatar);
-          tlaDim(agentOps[0]);
-          tlaDim(placeholders[0]);
+          placeholders.forEach(p => p.classList.remove('filled'));
         }
-        break;
-      case 10:
-        if (forward) { tlaUndim(agentOps[1]); tlaUndim(placeholders[1]); }
-        else         { tlaDim(agentOps[1]);   tlaDim(placeholders[1]); }
-        break;
-      case 11:
-        if (forward) { tlaUndim(agentOps[2]); tlaUndim(placeholders[2]); }
-        else         { tlaDim(agentOps[2]);   tlaDim(placeholders[2]); }
-        break;
-      case 12:
-        if (forward) { tlaUndim(agentOps[3]); tlaUndim(placeholders[3]); }
-        else         { tlaDim(agentOps[3]);   tlaDim(placeholders[3]); }
-        break;
-      case 13:
-        if (forward) { tlaUndim(agentOps[4]); tlaUndim(placeholders[4]); }
-        else         { tlaDim(agentOps[4]);   tlaDim(placeholders[4]); }
         break;
     }
   }
@@ -2267,19 +2242,8 @@
       prevTla.querySelector('.tla-hook')?.classList.remove('tla-ex-postfade');
       prevTla.querySelector('.tla-queue-manager')?.classList.remove('tla-ex-active');
       prevTla.querySelector('.tla-worker-triangle')?.classList.remove('tla-ex-active');
-      const prevAv = prevTla.querySelector('.tla-avatar');
-      if (prevAv) {
-        prevAv.classList.remove('tla-ex-pulse');
-        prevAv.classList.remove('tla-ex-dim');
-        prevAv.style.removeProperty('opacity');
-        prevAv.style.removeProperty('visibility');
-      }
-      prevTla.querySelectorAll('.tla-placeholder, .tla-agent-row .tla-op').forEach(el => {
-        el.classList.remove('filled');
-        el.classList.remove('tla-ex-dim');
-        el.style.removeProperty('opacity');
-        el.style.removeProperty('visibility');
-      });
+      prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-pulse');
+      prevTla.querySelectorAll('.tla-placeholder').forEach(p => p.classList.remove('filled'));
     }
 
     // Reset monolith tasks when leaving the slide
