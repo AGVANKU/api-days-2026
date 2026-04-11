@@ -1172,7 +1172,7 @@
   }
   .tla-dot.visible { opacity: 1; }
 
-  /* ── Closing slide: Q&A + LinkedIn QR ── */
+  /* ── Closing slide: LinkedIn QR ── */
   .qa-slide {
     display: flex !important;
     flex-direction: column;
@@ -1181,13 +1181,6 @@
     height: 100%;
     padding: 40px 0;
     text-align: center;
-  }
-  .qa-subtitle {
-    font-size: 26px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.75);
-    letter-spacing: 0.5px;
-    margin: 0 0 28px 0 !important;
   }
   .qa-qr-frame {
     position: relative;
@@ -1228,25 +1221,6 @@
   @keyframes qaQrFloat {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-6px); }
-  }
-  .qa-handle {
-    margin-top: 36px;
-  }
-  .qa-handle-label {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 8px;
-  }
-  .qa-handle-name {
-    font-size: 34px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--nus-blue-glow), var(--nus-orange-glow));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   /* ── Slide 10: KPIs ── */
@@ -1931,17 +1905,10 @@
   </div>
 </section>
 
-<section data-slide-bg="true" data-slide-title="LET'S TALK">
+<section data-slide-bg="true" data-slide-title="LET'S TALK &amp; CONNECT!">
   <div class="slide-content qa-slide">
-    <p class="qa-subtitle">Questions? Let's connect.</p>
-
     <div class="qa-qr-frame">
       <div class="qa-qr-inner" id="qaQrCode"></div>
-    </div>
-
-    <div class="qa-handle">
-      <div class="qa-handle-label">Scan to connect on LinkedIn</div>
-      <div class="qa-handle-name">Andreas Kurz</div>
     </div>
   </div>
 </section>
