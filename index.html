@@ -1112,11 +1112,13 @@
     animation: none;
   }
   /* Per-element dim for agent row during handoff / pre-reveal in iter2.
-     !important is required to override Reveal.js's own .fragment.visible { opacity: 1 } rule. */
-  .tla-avatar.tla-ex-dim,
-  .tla-placeholder.tla-ex-dim,
-  .tla-op.tla-ex-dim {
+     High-specificity selector + !important to beat Reveal.js's
+     .reveal .slides section .fragment.visible { opacity: 1 } rule. */
+  .reveal .slides section .tla-container .tla-agent-row .tla-avatar.tla-ex-dim,
+  .reveal .slides section .tla-container .tla-agent-row .tla-placeholder.tla-ex-dim,
+  .reveal .slides section .tla-container .tla-agent-row .tla-op.tla-ex-dim {
     opacity: 0 !important;
+    visibility: hidden !important;
     transition: opacity 0.5s !important;
   }
   .tla-avatar.tla-ex-dim .tla-avatar-icon,
@@ -2133,6 +2135,11 @@
   }
 
   // ── 3-Layer Example Phase ──
+  // Hide/show an agent-row element both via class (for the fade transition)
+  // and via !important inline style (belt-and-suspenders override of Reveal.js).
+  function tlaDim(el)   { if (!el) return; el.classList.add('tla-ex-dim');    el.style.setProperty('opacity', '0', 'important'); el.style.setProperty('visibility', 'hidden', 'important'); }
+  function tlaUndim(el) { if (!el) return; el.classList.remove('tla-ex-dim'); el.style.removeProperty('opacity'); el.style.removeProperty('visibility'); }
+
   function tlaExampleApply(slide, step, forward) {
     const container = slide.querySelector('.tla-container');
     if (!container) return;
@@ -2157,26 +2164,26 @@
       case 6: placeholders[3] && placeholders[3].classList[op]('filled'); break;
       case 7: placeholders[4] && placeholders[4].classList[op]('filled'); break;
       case 8:
-        // Handoff: hook postfades, manager clears, whole agent row (avatar + ops + placeholders)
-        // hides, worker triangle lights up, container switches to iter2.
+        // Handoff: hook postfades, manager clears, whole agent row hides,
+        // worker triangle lights up, container switches to iter2.
         if (forward) {
           hook && hook.classList.remove('tla-ex-mode');
           hook && hook.classList.add('tla-ex-postfade');
           mgrQueue && mgrQueue.classList.remove('tla-ex-active');
           avatar && avatar.classList.remove('tla-ex-pulse');
-          avatar && avatar.classList.add('tla-ex-dim');
-          placeholders.forEach(p => p.classList.add('tla-ex-dim'));
-          agentOps.forEach(o => o.classList.add('tla-ex-dim'));
+          tlaDim(avatar);
+          placeholders.forEach(tlaDim);
+          agentOps.forEach(tlaDim);
           workerTri && workerTri.classList.add('tla-ex-active');
           container.classList.add('tla-iter-2');
         } else {
           hook && hook.classList.remove('tla-ex-postfade');
           hook && hook.classList.add('tla-ex-mode');
           mgrQueue && mgrQueue.classList.add('tla-ex-active');
-          avatar && avatar.classList.remove('tla-ex-dim');
+          tlaUndim(avatar);
           avatar && avatar.classList.add('tla-ex-pulse');
-          placeholders.forEach(p => p.classList.remove('tla-ex-dim'));
-          agentOps.forEach(o => o.classList.remove('tla-ex-dim'));
+          placeholders.forEach(tlaUndim);
+          agentOps.forEach(tlaUndim);
           workerTri && workerTri.classList.remove('tla-ex-active');
           container.classList.remove('tla-iter-2');
         }
@@ -2184,52 +2191,32 @@
       case 9:
         // Iter2 click 1: avatar un-hides + pulses, Objective pair un-hides
         if (forward) {
-          avatar && avatar.classList.remove('tla-ex-dim');
+          tlaUndim(avatar);
           avatar && avatar.classList.add('tla-ex-pulse');
-          agentOps[0] && agentOps[0].classList.remove('tla-ex-dim');
-          placeholders[0] && placeholders[0].classList.remove('tla-ex-dim');
+          tlaUndim(agentOps[0]);
+          tlaUndim(placeholders[0]);
         } else {
           avatar && avatar.classList.remove('tla-ex-pulse');
-          avatar && avatar.classList.add('tla-ex-dim');
-          agentOps[0] && agentOps[0].classList.add('tla-ex-dim');
-          placeholders[0] && placeholders[0].classList.add('tla-ex-dim');
+          tlaDim(avatar);
+          tlaDim(agentOps[0]);
+          tlaDim(placeholders[0]);
         }
         break;
       case 10:
-        if (forward) {
-          agentOps[1] && agentOps[1].classList.remove('tla-ex-dim');
-          placeholders[1] && placeholders[1].classList.remove('tla-ex-dim');
-        } else {
-          agentOps[1] && agentOps[1].classList.add('tla-ex-dim');
-          placeholders[1] && placeholders[1].classList.add('tla-ex-dim');
-        }
+        if (forward) { tlaUndim(agentOps[1]); tlaUndim(placeholders[1]); }
+        else         { tlaDim(agentOps[1]);   tlaDim(placeholders[1]); }
         break;
       case 11:
-        if (forward) {
-          agentOps[2] && agentOps[2].classList.remove('tla-ex-dim');
-          placeholders[2] && placeholders[2].classList.remove('tla-ex-dim');
-        } else {
-          agentOps[2] && agentOps[2].classList.add('tla-ex-dim');
-          placeholders[2] && placeholders[2].classList.add('tla-ex-dim');
-        }
+        if (forward) { tlaUndim(agentOps[2]); tlaUndim(placeholders[2]); }
+        else         { tlaDim(agentOps[2]);   tlaDim(placeholders[2]); }
         break;
       case 12:
-        if (forward) {
-          agentOps[3] && agentOps[3].classList.remove('tla-ex-dim');
-          placeholders[3] && placeholders[3].classList.remove('tla-ex-dim');
-        } else {
-          agentOps[3] && agentOps[3].classList.add('tla-ex-dim');
-          placeholders[3] && placeholders[3].classList.add('tla-ex-dim');
-        }
+        if (forward) { tlaUndim(agentOps[3]); tlaUndim(placeholders[3]); }
+        else         { tlaDim(agentOps[3]);   tlaDim(placeholders[3]); }
         break;
       case 13:
-        if (forward) {
-          agentOps[4] && agentOps[4].classList.remove('tla-ex-dim');
-          placeholders[4] && placeholders[4].classList.remove('tla-ex-dim');
-        } else {
-          agentOps[4] && agentOps[4].classList.add('tla-ex-dim');
-          placeholders[4] && placeholders[4].classList.add('tla-ex-dim');
-        }
+        if (forward) { tlaUndim(agentOps[4]); tlaUndim(placeholders[4]); }
+        else         { tlaDim(agentOps[4]);   tlaDim(placeholders[4]); }
         break;
     }
   }
@@ -2280,11 +2267,18 @@
       prevTla.querySelector('.tla-hook')?.classList.remove('tla-ex-postfade');
       prevTla.querySelector('.tla-queue-manager')?.classList.remove('tla-ex-active');
       prevTla.querySelector('.tla-worker-triangle')?.classList.remove('tla-ex-active');
-      prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-pulse');
-      prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-dim');
-      prevTla.querySelectorAll('.tla-placeholder').forEach(p => {
-        p.classList.remove('filled');
-        p.classList.remove('tla-ex-dim');
+      const prevAv = prevTla.querySelector('.tla-avatar');
+      if (prevAv) {
+        prevAv.classList.remove('tla-ex-pulse');
+        prevAv.classList.remove('tla-ex-dim');
+        prevAv.style.removeProperty('opacity');
+        prevAv.style.removeProperty('visibility');
+      }
+      prevTla.querySelectorAll('.tla-placeholder, .tla-agent-row .tla-op').forEach(el => {
+        el.classList.remove('filled');
+        el.classList.remove('tla-ex-dim');
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('visibility');
       });
     }
 
