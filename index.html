@@ -989,6 +989,12 @@
     width: 14px; height: 14px;
   }
   .tla-shape-diamond.active { box-shadow: 0 0 10px var(--nus-orange); }
+  .tla-queues .tla-queue-1ton {
+    flex: 0 0 auto;
+    width: 36px;
+    align-self: center;
+    justify-content: center;
+  }
 
   /* Agent layer */
   .tla-agent-row {
@@ -1582,18 +1588,23 @@
           <div class="tla-layer-label tla-label-mid">Message Queue Layer</div>
           <div class="tla-layer-title">Route</div>
         </div>
-        <div class="tla-queues fragment" data-fragment-index="4">
-          <div class="tla-queue-box tla-queue-workflow">
-            <span class="tla-queue-name">Agent Workflow Queue</span>
+        <div class="tla-queues">
+          <div class="tla-queue-box tla-queue-manager fragment" data-fragment-index="4">
+            <span class="tla-queue-name">Manager / Orchestrator Queue</span>
             <div class="tla-shapes">
               <div class="tla-shape tla-shape-circle" data-idx="0"></div>
-              <div class="tla-shape tla-shape-triangle" data-idx="1"></div>
-              <div class="tla-shape tla-shape-rect" data-idx="2"></div>
             </div>
           </div>
-          <div class="tla-queue-box tla-queue-mail">
-            <span class="tla-queue-name">Mail Queue</span>
+          <div class="oaot-1ton tla-queue-1ton fragment" data-fragment-index="6">
+            <span class="oaot-scale-n">1</span>
+            <span class="oaot-scale-dots">⋮</span>
+            <span class="oaot-scale-n">n</span>
+          </div>
+          <div class="tla-queue-box tla-queue-worker fragment" data-fragment-index="5">
+            <span class="tla-queue-name">Worker / Team Member Queue</span>
             <div class="tla-shapes">
+              <div class="tla-shape tla-shape-triangle" data-idx="1"></div>
+              <div class="tla-shape tla-shape-rect" data-idx="2"></div>
               <div class="tla-shape tla-shape-diamond" data-idx="3"></div>
             </div>
           </div>
@@ -1601,7 +1612,7 @@
       </div>
 
       <!-- ── Agent Layer ── -->
-      <div class="tla-layer tla-agents fragment" data-fragment-index="5">
+      <div class="tla-layer tla-agents fragment" data-fragment-index="7">
         <div class="tla-layer-header">
           <div class="tla-layer-label tla-label-orange">Agent Layer</div>
           <div class="tla-layer-title">Execute</div>
