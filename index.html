@@ -1172,6 +1172,83 @@
   }
   .tla-dot.visible { opacity: 1; }
 
+  /* ── Closing slide: Q&A + LinkedIn QR ── */
+  .qa-slide {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 0;
+    text-align: center;
+  }
+  .qa-subtitle {
+    font-size: 26px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.5px;
+    margin: 0 0 28px 0 !important;
+  }
+  .qa-qr-frame {
+    position: relative;
+    padding: 6px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, var(--nus-blue-glow), var(--nus-orange-glow));
+    box-shadow:
+      0 0 60px rgba(41, 182, 246, 0.35),
+      0 0 120px rgba(239, 124, 0, 0.25),
+      0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: qaQrFloat 4s ease-in-out infinite;
+  }
+  .qa-qr-frame::before {
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border-radius: 42px;
+    background: linear-gradient(135deg, rgba(41,182,246,0.18), rgba(239,124,0,0.14));
+    filter: blur(28px);
+    z-index: -1;
+    opacity: 0.85;
+  }
+  .qa-qr-inner {
+    width: 340px;
+    height: 340px;
+    padding: 18px;
+    border-radius: 22px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qa-qr-inner svg,
+  .qa-qr-inner canvas {
+    width: 100%;
+    height: 100%;
+  }
+  @keyframes qaQrFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .qa-handle {
+    margin-top: 36px;
+  }
+  .qa-handle-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .qa-handle-name {
+    font-size: 34px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--nus-blue-glow), var(--nus-orange-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   /* ── Slide 10: KPIs ── */
   .kpi-cards { display: flex; gap: 28px; margin-top: 40px; align-items: stretch; }
   .kpi-card {
@@ -1854,10 +1931,26 @@
   </div>
 </section>
 
+<section data-slide-bg="true" data-slide-title="LET'S TALK">
+  <div class="slide-content qa-slide">
+    <p class="qa-subtitle">Questions? Let's connect.</p>
+
+    <div class="qa-qr-frame">
+      <div class="qa-qr-inner" id="qaQrCode"></div>
+    </div>
+
+    <div class="qa-handle">
+      <div class="qa-handle-label">Scan to connect on LinkedIn</div>
+      <div class="qa-handle-name">Andreas Kurz</div>
+    </div>
+  </div>
+</section>
+
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
 <script>
   Reveal.initialize({
     width: 1280,
@@ -2213,8 +2306,51 @@
     }
   }
 
+  // ── Closing Q&A slide: render styled LinkedIn QR code once ──
+  function renderQaQrCode() {
+    const container = document.getElementById('qaQrCode');
+    if (!container || container.childElementCount > 0) return;
+    if (typeof QRCodeStyling === 'undefined') return;
+    const qr = new QRCodeStyling({
+      width: 340,
+      height: 340,
+      type: 'svg',
+      data: 'https://www.linkedin.com/in/andreas-kurz-137711164/',
+      margin: 0,
+      qrOptions: { errorCorrectionLevel: 'H' },
+      dotsOptions: {
+        type: 'rounded',
+        gradient: {
+          type: 'linear',
+          rotation: Math.PI / 4,
+          colorStops: [
+            { offset: 0, color: '#1565c0' },
+            { offset: 1, color: '#ef7c00' },
+          ],
+        },
+      },
+      cornersSquareOptions: {
+        type: 'extra-rounded',
+        color: '#1565c0',
+      },
+      cornersDotOptions: {
+        type: 'dot',
+        color: '#ef7c00',
+      },
+      backgroundOptions: {
+        color: '#ffffff',
+      },
+    });
+    qr.append(container);
+  }
+  // Kick off once DOM is ready (works whether slide is visible or not)
+  setTimeout(renderQaQrCode, 100);
+
   // Trigger animations when slide becomes active
   Reveal.on('slidechanged', function(event) {
+    // Render QR on first reach (library may not have been loaded at initial tick)
+    renderQaQrCode();
+
     const docProcess = event.currentSlide.querySelector('.doc-process');
     if (docProcess) {
       docProcess.classList.remove('animate');
