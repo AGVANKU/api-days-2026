@@ -1103,15 +1103,25 @@
     animation: tlaExPulseScale 1.6s ease-in-out infinite;
     filter: drop-shadow(0 0 10px var(--nus-orange-glow));
   }
-  /* Handoff: fade all placeholders and pause pulses */
-  .tla-container.tla-ex-handoff .tla-placeholder.filled {
-    opacity: 0.3;
+  /* Hook layer post-fade (handoff + iter2 running) */
+  .tla-hook.tla-ex-postfade .tla-trigger {
+    opacity: 0.5;
     transition: opacity 0.6s;
   }
-  .tla-container.tla-ex-handoff .tla-placeholder.filled .tla-icon-iter1,
-  .tla-container.tla-ex-handoff .tla-placeholder.filled .tla-icon-iter2,
-  .tla-container.tla-ex-handoff .tla-placeholder-result.filled .tla-placeholder-triangle,
-  .tla-container.tla-ex-handoff .tla-placeholder-result.filled .tla-placeholder-diamond {
+  .tla-hook.tla-ex-postfade .tla-trigger-icon {
+    animation: none;
+  }
+  /* Per-element dim for agent row during handoff / pre-reveal in iter2 */
+  .tla-avatar.tla-ex-dim,
+  .tla-placeholder.tla-ex-dim {
+    opacity: 0.1;
+    transition: opacity 0.5s;
+  }
+  .tla-avatar.tla-ex-dim .tla-avatar-icon,
+  .tla-placeholder.tla-ex-dim .tla-icon-iter1,
+  .tla-placeholder.tla-ex-dim .tla-icon-iter2,
+  .tla-placeholder.tla-ex-dim .tla-placeholder-triangle,
+  .tla-placeholder.tla-ex-dim .tla-placeholder-diamond {
     animation: none;
   }
   /* Worker queue triangle activation (step 8 handoff) */
@@ -1122,18 +1132,6 @@
   }
   /* Inline SVG browser icon inherits text color for pulse contrast */
   .tla-browser-svg { color: rgba(255,255,255,0.85); }
-  /* Iter2 flash-in: one-shot attention burst, then settle into the steady pulse */
-  @keyframes tlaIterFlash {
-    0%   { transform: scale(1); filter: brightness(1); }
-    40%  { transform: scale(1.28); filter: brightness(1.35) drop-shadow(0 0 14px var(--nus-orange-glow)); }
-    100% { transform: scale(1); filter: brightness(1); }
-  }
-  .tla-iter-pulse .tla-icon-iter1,
-  .tla-iter-pulse .tla-icon-iter2,
-  .tla-iter-pulse .tla-placeholder-triangle,
-  .tla-iter-pulse .tla-placeholder-diamond {
-    animation: tlaIterFlash 0.8s ease-out 1, tlaExPulseScale 1.6s ease-in-out infinite 0.8s;
-  }
   .tla-hook.tla-ex-mode .tla-trigger:not(.tla-ex-api) {
     opacity: 0.3;
     transition: opacity 0.6s;
@@ -1747,7 +1745,8 @@
           <span class="tla-op fragment" data-fragment-index="9">+</span>
           <div class="tla-placeholder fragment" data-fragment-index="9">
             <span class="tla-placeholder-label">Objective</span>
-            <img src="terminal-prompt.png" class="tla-placeholder-icon tla-icon-iter1 tla-icon-iter2">
+            <img src="terminal-prompt.png" class="tla-placeholder-icon tla-icon-iter1">
+            <img src="terminal-prompt.png" class="tla-placeholder-icon tla-icon-iter2">
           </div>
 
           <span class="tla-op fragment" data-fragment-index="10">+</span>
@@ -1760,7 +1759,8 @@
           <span class="tla-op fragment" data-fragment-index="11">+</span>
           <div class="tla-placeholder fragment" data-fragment-index="11">
             <span class="tla-placeholder-label">Context</span>
-            <img src="database.png" class="tla-placeholder-icon tla-icon-iter1 tla-icon-iter2">
+            <img src="database.png" class="tla-placeholder-icon tla-icon-iter1">
+            <img src="database.png" class="tla-placeholder-icon tla-icon-iter2">
           </div>
 
           <span class="tla-op fragment" data-fragment-index="12">+</span>
@@ -1794,8 +1794,12 @@
       <span class="fragment tla-ex-step" data-fragment-index="18" data-step="5" style="display:none;"></span>
       <span class="fragment tla-ex-step" data-fragment-index="19" data-step="6" style="display:none;"></span>
       <span class="fragment tla-ex-step" data-fragment-index="20" data-step="7" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="21" data-step="8" style="display:none;"></span>
-      <span class="fragment tla-ex-step" data-fragment-index="22" data-step="9" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="21" data-step="8"  style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="22" data-step="9"  style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="23" data-step="10" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="24" data-step="11" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="25" data-step="12" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="26" data-step="13" style="display:none;"></span>
     </div>
   </div>
 </section>
@@ -2149,42 +2153,55 @@
       case 6: placeholders[3] && placeholders[3].classList[op]('filled'); break;
       case 7: placeholders[4] && placeholders[4].classList[op]('filled'); break;
       case 8:
-        // Handoff: clear iter1 highlights, fade placeholders, light up worker triangle
+        // Handoff: hook postfades, manager clears, avatar + all placeholders dim,
+        // worker triangle lights up, container switches to iter2.
         if (forward) {
           hook && hook.classList.remove('tla-ex-mode');
+          hook && hook.classList.add('tla-ex-postfade');
           mgrQueue && mgrQueue.classList.remove('tla-ex-active');
           avatar && avatar.classList.remove('tla-ex-pulse');
-          container.classList.add('tla-ex-handoff');
+          avatar && avatar.classList.add('tla-ex-dim');
+          placeholders.forEach(p => p.classList.add('tla-ex-dim'));
           workerTri && workerTri.classList.add('tla-ex-active');
+          container.classList.add('tla-iter-2');
         } else {
-          // Reverse: restore iter1 pulses
+          hook && hook.classList.remove('tla-ex-postfade');
           hook && hook.classList.add('tla-ex-mode');
           mgrQueue && mgrQueue.classList.add('tla-ex-active');
+          avatar && avatar.classList.remove('tla-ex-dim');
           avatar && avatar.classList.add('tla-ex-pulse');
-          container.classList.remove('tla-ex-handoff');
+          placeholders.forEach(p => p.classList.remove('tla-ex-dim'));
           workerTri && workerTri.classList.remove('tla-ex-active');
+          container.classList.remove('tla-iter-2');
         }
         break;
       case 9:
-        // Iter2 runtime load: staggered auto-animation
+        // Iter2: avatar un-dims + pulses, Objective un-dims
         if (forward) {
-          container.classList.remove('tla-ex-handoff');
-          container.classList.add('tla-iter-2');
-          const stagger = [
-            [0,    () => avatar && avatar.classList.add('tla-ex-pulse')],
-            [200,  () => placeholders[0] && placeholders[0].classList.add('tla-iter-pulse')],
-            [500,  () => placeholders[1] && placeholders[1].classList.add('tla-iter-pulse')],
-            [800,  () => placeholders[2] && placeholders[2].classList.add('tla-iter-pulse')],
-            [1100, () => placeholders[3] && placeholders[3].classList.add('tla-iter-pulse')],
-            [1400, () => placeholders[4] && placeholders[4].classList.add('tla-iter-pulse')],
-          ];
-          stagger.forEach(([delay, fn]) => setTimeout(fn, delay));
+          avatar && avatar.classList.remove('tla-ex-dim');
+          avatar && avatar.classList.add('tla-ex-pulse');
+          placeholders[0] && placeholders[0].classList.remove('tla-ex-dim');
         } else {
-          container.classList.add('tla-ex-handoff');
-          container.classList.remove('tla-iter-2');
           avatar && avatar.classList.remove('tla-ex-pulse');
-          placeholders.forEach(p => p.classList.remove('tla-iter-pulse'));
+          avatar && avatar.classList.add('tla-ex-dim');
+          placeholders[0] && placeholders[0].classList.add('tla-ex-dim');
         }
+        break;
+      case 10:
+        if (forward) placeholders[1] && placeholders[1].classList.remove('tla-ex-dim');
+        else         placeholders[1] && placeholders[1].classList.add('tla-ex-dim');
+        break;
+      case 11:
+        if (forward) placeholders[2] && placeholders[2].classList.remove('tla-ex-dim');
+        else         placeholders[2] && placeholders[2].classList.add('tla-ex-dim');
+        break;
+      case 12:
+        if (forward) placeholders[3] && placeholders[3].classList.remove('tla-ex-dim');
+        else         placeholders[3] && placeholders[3].classList.add('tla-ex-dim');
+        break;
+      case 13:
+        if (forward) placeholders[4] && placeholders[4].classList.remove('tla-ex-dim');
+        else         placeholders[4] && placeholders[4].classList.add('tla-ex-dim');
         break;
     }
   }
@@ -2229,16 +2246,17 @@
     const prevTla = event.previousSlide?.querySelector('.tla-container');
     if (prevTla) {
       prevTla.classList.remove('animating');
-      prevTla.classList.remove('tla-ex-handoff');
       prevTla.classList.remove('tla-iter-2');
       // Clear example phase state so returning to the slide starts clean
       prevTla.querySelector('.tla-hook')?.classList.remove('tla-ex-mode');
+      prevTla.querySelector('.tla-hook')?.classList.remove('tla-ex-postfade');
       prevTla.querySelector('.tla-queue-manager')?.classList.remove('tla-ex-active');
       prevTla.querySelector('.tla-worker-triangle')?.classList.remove('tla-ex-active');
       prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-pulse');
+      prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-dim');
       prevTla.querySelectorAll('.tla-placeholder').forEach(p => {
         p.classList.remove('filled');
-        p.classList.remove('tla-iter-pulse');
+        p.classList.remove('tla-ex-dim');
       });
     }
 
