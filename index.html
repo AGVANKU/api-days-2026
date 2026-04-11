@@ -1022,6 +1022,32 @@
     background: rgba(76,175,80,0.4); box-shadow: 0 0 16px rgba(76,175,80,0.5);
   }
 
+  /* Agent layer — generic runtime placeholders */
+  .tla-avatar {
+    display: flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px;
+    flex-shrink: 0;
+  }
+  .tla-avatar-icon { width: 52px; height: 52px; object-fit: contain; }
+
+  .tla-placeholder {
+    min-width: 72px; height: 52px;
+    padding: 0 12px;
+    border: 1.5px dotted rgba(255,255,255,0.35);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.6px; text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    flex-shrink: 0;
+  }
+  .tla-placeholder-result {
+    border-color: rgba(76,175,80,0.45);
+    color: rgba(76,175,80,0.85);
+    background: rgba(76,175,80,0.06);
+  }
+
   /* Flow dot */
   .tla-dot {
     position: absolute; width: 10px; height: 10px; border-radius: 50%;
@@ -1610,35 +1636,24 @@
           <div class="tla-layer-title">Execute</div>
         </div>
         <div class="tla-agent-row">
-          <div class="tla-agent" data-idx="0">
-            <img src="ai-robot.png" class="tla-agent-icon tla-agent-lg">
-            <span class="tla-agent-name">Orchestrator</span>
+          <div class="tla-avatar fragment" data-fragment-index="8">
+            <img src="ai-robot.png" class="tla-avatar-icon">
           </div>
-          <span class="tla-op">+</span>
-          <div class="tla-agent" data-idx="1">
-            <img src="task-config-gear.png" class="tla-agent-icon">
-            <span class="tla-agent-name">Planner</span>
-          </div>
-          <span class="tla-op">+</span>
-          <div class="tla-agent" data-idx="2">
-            <img src="gemini-sparkle.png" class="tla-agent-icon">
-            <span class="tla-agent-name">LLM</span>
-          </div>
-          <span class="tla-op">+</span>
-          <div class="tla-agent" data-idx="3">
-            <img src="sap-logo.png" class="tla-agent-icon">
-            <span class="tla-agent-name">SAP</span>
-          </div>
-          <span class="tla-op">+</span>
-          <div class="tla-agent" data-idx="4">
-            <img src="database.png" class="tla-agent-icon">
-            <span class="tla-agent-name">Store</span>
-          </div>
-          <span class="tla-op">=</span>
-          <div class="tla-agent tla-agent-result" data-idx="5">
-            <div class="tla-result-icon">&#10003;</div>
-            <span class="tla-agent-name">Result</span>
-          </div>
+
+          <span class="tla-op fragment" data-fragment-index="9">+</span>
+          <div class="tla-placeholder fragment" data-fragment-index="9">Objective</div>
+
+          <span class="tla-op fragment" data-fragment-index="10">+</span>
+          <div class="tla-placeholder fragment" data-fragment-index="10">Model</div>
+
+          <span class="tla-op fragment" data-fragment-index="11">+</span>
+          <div class="tla-placeholder fragment" data-fragment-index="11">Context</div>
+
+          <span class="tla-op fragment" data-fragment-index="12">+</span>
+          <div class="tla-placeholder fragment" data-fragment-index="12">Tools</div>
+
+          <span class="tla-op fragment" data-fragment-index="13">=</span>
+          <div class="tla-placeholder tla-placeholder-result fragment" data-fragment-index="13">Next Action</div>
         </div>
       </div>
     </div>
@@ -1709,14 +1724,15 @@
       });
     }
 
-    // 3-Layer: start animation loop when agent layer (last layer) appears
-    if (el.classList.contains('tla-agents')) {
-      const container = el.closest('.tla-container');
-      if (container) {
-        container.classList.add('animating');
-        startTlaAnimation(el.closest('section'));
-      }
-    }
+    // 3-Layer: auto-animation loop deferred — new layout uses generic placeholders
+    // instead of fixed 6-agent equation. Re-wire this when designing the simulation.
+    // if (el.classList.contains('tla-agents')) {
+    //   const container = el.closest('.tla-container');
+    //   if (container) {
+    //     container.classList.add('animating');
+    //     startTlaAnimation(el.closest('section'));
+    //   }
+    // }
 
     // Speech bubble delayed elements: auto-fade after parent fragment appears
     const fragIndex = el.getAttribute('data-fragment-index');
