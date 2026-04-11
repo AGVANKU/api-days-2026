@@ -1111,18 +1111,20 @@
   .tla-hook.tla-ex-postfade .tla-trigger-icon {
     animation: none;
   }
-  /* Per-element dim for agent row during handoff / pre-reveal in iter2 */
+  /* Per-element dim for agent row during handoff / pre-reveal in iter2.
+     !important is required to override Reveal.js's own .fragment.visible { opacity: 1 } rule. */
   .tla-avatar.tla-ex-dim,
-  .tla-placeholder.tla-ex-dim {
-    opacity: 0.1;
-    transition: opacity 0.5s;
+  .tla-placeholder.tla-ex-dim,
+  .tla-op.tla-ex-dim {
+    opacity: 0 !important;
+    transition: opacity 0.5s !important;
   }
   .tla-avatar.tla-ex-dim .tla-avatar-icon,
   .tla-placeholder.tla-ex-dim .tla-icon-iter1,
   .tla-placeholder.tla-ex-dim .tla-icon-iter2,
   .tla-placeholder.tla-ex-dim .tla-placeholder-triangle,
   .tla-placeholder.tla-ex-dim .tla-placeholder-diamond {
-    animation: none;
+    animation: none !important;
   }
   /* Worker queue triangle activation (step 8 handoff) */
   .tla-worker-triangle.tla-ex-active {
@@ -2139,8 +2141,10 @@
     const mgrQueue = container.querySelector('.tla-queue-manager');
     const avatar = container.querySelector('.tla-avatar');
     const placeholders = container.querySelectorAll('.tla-placeholder');
+    const agentOps = container.querySelectorAll('.tla-agent-row .tla-op');
     const workerTri = container.querySelector('.tla-worker-triangle');
     // placeholders: [0] Objective, [1] Model, [2] Context, [3] Tools, [4] Next Action
+    // agentOps:     [0] + before Obj, [1] + before Mod, [2] + before Ctx, [3] + before Tools, [4] = before Next
     switch (step) {
       case 1: hook && hook.classList[op]('tla-ex-mode'); break;
       case 2: mgrQueue && mgrQueue.classList[op]('tla-ex-active'); break;
@@ -2153,8 +2157,8 @@
       case 6: placeholders[3] && placeholders[3].classList[op]('filled'); break;
       case 7: placeholders[4] && placeholders[4].classList[op]('filled'); break;
       case 8:
-        // Handoff: hook postfades, manager clears, avatar + all placeholders dim,
-        // worker triangle lights up, container switches to iter2.
+        // Handoff: hook postfades, manager clears, whole agent row (avatar + ops + placeholders)
+        // hides, worker triangle lights up, container switches to iter2.
         if (forward) {
           hook && hook.classList.remove('tla-ex-mode');
           hook && hook.classList.add('tla-ex-postfade');
@@ -2162,6 +2166,7 @@
           avatar && avatar.classList.remove('tla-ex-pulse');
           avatar && avatar.classList.add('tla-ex-dim');
           placeholders.forEach(p => p.classList.add('tla-ex-dim'));
+          agentOps.forEach(o => o.classList.add('tla-ex-dim'));
           workerTri && workerTri.classList.add('tla-ex-active');
           container.classList.add('tla-iter-2');
         } else {
@@ -2171,37 +2176,60 @@
           avatar && avatar.classList.remove('tla-ex-dim');
           avatar && avatar.classList.add('tla-ex-pulse');
           placeholders.forEach(p => p.classList.remove('tla-ex-dim'));
+          agentOps.forEach(o => o.classList.remove('tla-ex-dim'));
           workerTri && workerTri.classList.remove('tla-ex-active');
           container.classList.remove('tla-iter-2');
         }
         break;
       case 9:
-        // Iter2: avatar un-dims + pulses, Objective un-dims
+        // Iter2 click 1: avatar un-hides + pulses, Objective pair un-hides
         if (forward) {
           avatar && avatar.classList.remove('tla-ex-dim');
           avatar && avatar.classList.add('tla-ex-pulse');
+          agentOps[0] && agentOps[0].classList.remove('tla-ex-dim');
           placeholders[0] && placeholders[0].classList.remove('tla-ex-dim');
         } else {
           avatar && avatar.classList.remove('tla-ex-pulse');
           avatar && avatar.classList.add('tla-ex-dim');
+          agentOps[0] && agentOps[0].classList.add('tla-ex-dim');
           placeholders[0] && placeholders[0].classList.add('tla-ex-dim');
         }
         break;
       case 10:
-        if (forward) placeholders[1] && placeholders[1].classList.remove('tla-ex-dim');
-        else         placeholders[1] && placeholders[1].classList.add('tla-ex-dim');
+        if (forward) {
+          agentOps[1] && agentOps[1].classList.remove('tla-ex-dim');
+          placeholders[1] && placeholders[1].classList.remove('tla-ex-dim');
+        } else {
+          agentOps[1] && agentOps[1].classList.add('tla-ex-dim');
+          placeholders[1] && placeholders[1].classList.add('tla-ex-dim');
+        }
         break;
       case 11:
-        if (forward) placeholders[2] && placeholders[2].classList.remove('tla-ex-dim');
-        else         placeholders[2] && placeholders[2].classList.add('tla-ex-dim');
+        if (forward) {
+          agentOps[2] && agentOps[2].classList.remove('tla-ex-dim');
+          placeholders[2] && placeholders[2].classList.remove('tla-ex-dim');
+        } else {
+          agentOps[2] && agentOps[2].classList.add('tla-ex-dim');
+          placeholders[2] && placeholders[2].classList.add('tla-ex-dim');
+        }
         break;
       case 12:
-        if (forward) placeholders[3] && placeholders[3].classList.remove('tla-ex-dim');
-        else         placeholders[3] && placeholders[3].classList.add('tla-ex-dim');
+        if (forward) {
+          agentOps[3] && agentOps[3].classList.remove('tla-ex-dim');
+          placeholders[3] && placeholders[3].classList.remove('tla-ex-dim');
+        } else {
+          agentOps[3] && agentOps[3].classList.add('tla-ex-dim');
+          placeholders[3] && placeholders[3].classList.add('tla-ex-dim');
+        }
         break;
       case 13:
-        if (forward) placeholders[4] && placeholders[4].classList.remove('tla-ex-dim');
-        else         placeholders[4] && placeholders[4].classList.add('tla-ex-dim');
+        if (forward) {
+          agentOps[4] && agentOps[4].classList.remove('tla-ex-dim');
+          placeholders[4] && placeholders[4].classList.remove('tla-ex-dim');
+        } else {
+          agentOps[4] && agentOps[4].classList.add('tla-ex-dim');
+          placeholders[4] && placeholders[4].classList.add('tla-ex-dim');
+        }
         break;
     }
   }
