@@ -1051,6 +1051,51 @@
     background: rgba(76,175,80,0.06);
   }
 
+  /* Example phase — guided trace pulses + placeholder fills */
+  @keyframes tlaExPulseScale {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.18); }
+  }
+  .tla-placeholder-label { transition: opacity 0.3s; }
+  .tla-placeholder-icon {
+    display: none;
+    width: 40px; height: 40px; object-fit: contain;
+  }
+  .tla-placeholder-triangle {
+    display: none;
+    width: 0; height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 34px solid var(--nus-orange);
+  }
+  .tla-placeholder.filled .tla-placeholder-label { display: none; }
+  .tla-placeholder.filled .tla-placeholder-icon {
+    display: block;
+    animation: tlaExPulseScale 1.6s ease-in-out infinite;
+  }
+  .tla-placeholder-result.filled .tla-placeholder-triangle {
+    display: block;
+    animation: tlaExPulseScale 1.6s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px var(--nus-orange-glow));
+  }
+  .tla-hook.tla-ex-mode .tla-trigger:not(.tla-ex-api) {
+    opacity: 0.3;
+    transition: opacity 0.6s;
+  }
+  .tla-hook.tla-ex-mode .tla-trigger.tla-ex-api .tla-trigger-icon {
+    animation: tlaExPulseScale 1.6s ease-in-out infinite;
+  }
+  .tla-queue-manager.tla-ex-active .tla-shape-circle {
+    opacity: 1;
+    background: var(--nus-orange);
+    box-shadow: 0 0 14px var(--nus-orange-glow);
+    animation: tlaExPulseScale 1.6s ease-in-out infinite;
+  }
+  .tla-avatar.tla-ex-pulse .tla-avatar-icon {
+    animation: tlaExPulseScale 1.6s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px var(--nus-orange-glow));
+  }
+
   /* Flow dot */
   .tla-dot {
     position: absolute; width: 10px; height: 10px; border-radius: 50%;
@@ -1597,7 +1642,7 @@
           <div class="tla-trigger tla-hook-auto" data-delay="900" data-idx="4">
             <img src="document-scanner.png" class="tla-trigger-icon">
           </div>
-          <div class="tla-trigger tla-hook-auto" data-delay="1200" data-idx="5">
+          <div class="tla-trigger tla-hook-auto tla-ex-api" data-delay="1200" data-idx="5">
             <img src="connector-plug.png" class="tla-trigger-icon tla-invert">
           </div>
         </div>
@@ -1644,21 +1689,45 @@
           </div>
 
           <span class="tla-op fragment" data-fragment-index="9">+</span>
-          <div class="tla-placeholder fragment" data-fragment-index="9">Objective</div>
+          <div class="tla-placeholder fragment" data-fragment-index="9">
+            <span class="tla-placeholder-label">Objective</span>
+            <img src="terminal-prompt.png" class="tla-placeholder-icon">
+          </div>
 
           <span class="tla-op fragment" data-fragment-index="10">+</span>
-          <div class="tla-placeholder fragment" data-fragment-index="10">Model</div>
+          <div class="tla-placeholder fragment" data-fragment-index="10">
+            <span class="tla-placeholder-label">Model</span>
+            <img src="chatgpt-logo.png" class="tla-placeholder-icon">
+          </div>
 
           <span class="tla-op fragment" data-fragment-index="11">+</span>
-          <div class="tla-placeholder fragment" data-fragment-index="11">Context</div>
+          <div class="tla-placeholder fragment" data-fragment-index="11">
+            <span class="tla-placeholder-label">Context</span>
+            <img src="database.png" class="tla-placeholder-icon">
+          </div>
 
           <span class="tla-op fragment" data-fragment-index="12">+</span>
-          <div class="tla-placeholder fragment" data-fragment-index="12">Tools</div>
+          <div class="tla-placeholder fragment" data-fragment-index="12">
+            <span class="tla-placeholder-label">Tools</span>
+            <img src="api-icon.svg" class="tla-placeholder-icon">
+          </div>
 
           <span class="tla-op fragment" data-fragment-index="13">=</span>
-          <div class="tla-placeholder tla-placeholder-result fragment" data-fragment-index="13">Next Action</div>
+          <div class="tla-placeholder tla-placeholder-result fragment" data-fragment-index="13">
+            <span class="tla-placeholder-label">Next Action</span>
+            <div class="tla-placeholder-triangle"></div>
+          </div>
         </div>
       </div>
+
+      <!-- Example phase markers (hidden) -->
+      <span class="fragment tla-ex-step" data-fragment-index="14" data-step="1" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="15" data-step="2" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="16" data-step="3" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="17" data-step="4" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="18" data-step="5" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="19" data-step="6" style="display:none;"></span>
+      <span class="fragment tla-ex-step" data-fragment-index="20" data-step="7" style="display:none;"></span>
     </div>
   </div>
 </section>
@@ -1808,6 +1877,11 @@
       const kpis = document.getElementById('docKpiBox');
       if (kpis) setTimeout(() => kpis.classList.add('show'), 500);
     }
+    // 3-Layer example phase: apply step state on marker fragments
+    if (el.classList.contains('tla-ex-step')) {
+      const step = parseInt(el.getAttribute('data-step'));
+      tlaExampleApply(el.closest('section'), step, true);
+    }
   });
   Reveal.on('fragmenthidden', function(event) {
     const el = event.fragment;
@@ -1855,6 +1929,11 @@
       if (zone) zone.classList.remove('show-border');
       const kpis = document.getElementById('docKpiBox');
       if (kpis) kpis.classList.remove('show');
+    }
+    // 3-Layer example phase: reverse step state on marker fragment hide
+    if (el.classList.contains('tla-ex-step')) {
+      const step = parseInt(el.getAttribute('data-step'));
+      tlaExampleApply(el.closest('section'), step, false);
     }
     // Restore title and definition when going back from human phase
     if (el.id === 's4HumanHeader') {
@@ -1979,6 +2058,30 @@
     if (tlaInterval) { clearInterval(tlaInterval); tlaInterval = null; }
   }
 
+  // ── 3-Layer Example Phase ──
+  function tlaExampleApply(slide, step, forward) {
+    const container = slide.querySelector('.tla-container');
+    if (!container) return;
+    const op = forward ? 'add' : 'remove';
+    const hook = container.querySelector('.tla-hook');
+    const mgrQueue = container.querySelector('.tla-queue-manager');
+    const avatar = container.querySelector('.tla-avatar');
+    const placeholders = container.querySelectorAll('.tla-placeholder');
+    // placeholders: [0] Objective, [1] Model, [2] Context, [3] Tools, [4] Next Action
+    switch (step) {
+      case 1: hook && hook.classList[op]('tla-ex-mode'); break;
+      case 2: mgrQueue && mgrQueue.classList[op]('tla-ex-active'); break;
+      case 3:
+        avatar && avatar.classList[op]('tla-ex-pulse');
+        placeholders[0] && placeholders[0].classList[op]('filled');
+        break;
+      case 4: placeholders[1] && placeholders[1].classList[op]('filled'); break;
+      case 5: placeholders[2] && placeholders[2].classList[op]('filled'); break;
+      case 6: placeholders[3] && placeholders[3].classList[op]('filled'); break;
+      case 7: placeholders[4] && placeholders[4].classList[op]('filled'); break;
+    }
+  }
+
   // Trigger animations when slide becomes active
   Reveal.on('slidechanged', function(event) {
     const docProcess = event.currentSlide.querySelector('.doc-process');
@@ -2017,7 +2120,14 @@
     // 3-Layer: stop animation when leaving slide
     stopTlaAnimation();
     const prevTla = event.previousSlide?.querySelector('.tla-container');
-    if (prevTla) prevTla.classList.remove('animating');
+    if (prevTla) {
+      prevTla.classList.remove('animating');
+      // Clear example phase state so returning to the slide starts clean
+      prevTla.querySelector('.tla-hook')?.classList.remove('tla-ex-mode');
+      prevTla.querySelector('.tla-queue-manager')?.classList.remove('tla-ex-active');
+      prevTla.querySelector('.tla-avatar')?.classList.remove('tla-ex-pulse');
+      prevTla.querySelectorAll('.tla-placeholder').forEach(p => p.classList.remove('filled'));
+    }
 
     // Reset monolith tasks when leaving the slide
     const prevMonoTasks = event.previousSlide?.querySelectorAll('.mono-auto-task');
