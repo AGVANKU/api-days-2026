@@ -907,11 +907,11 @@
 
   /* ── Slide 8: 3-Layer Agentic Architecture ── */
   .tla-container {
-    display: flex; flex-direction: column; gap: 8px; margin-top: 16px;
+    display: flex; flex-direction: column; gap: 14px; margin-top: 20px;
     position: relative;
   }
   .tla-layer {
-    border-radius: 12px; padding: 14px 20px; position: relative;
+    border-radius: 14px; padding: 20px 26px; position: relative;
   }
   .tla-hook {
     background: rgba(21,101,192,0.1); border: 1px solid rgba(21,101,192,0.25);
@@ -924,19 +924,19 @@
     background: rgba(239,124,0,0.08); border: 1px solid rgba(239,124,0,0.2);
   }
   .tla-layer-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    margin-bottom: 4px;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 6px;
   }
   .tla-label-blue { color: var(--nus-blue-glow); }
   .tla-label-mid { color: rgba(255,255,255,0.5); }
   .tla-label-orange { color: var(--nus-orange-glow); }
   .tla-layer-title {
-    font-size: 18px; font-weight: 700; margin-bottom: 8px;
+    font-size: 22px; font-weight: 700; margin-bottom: 12px;
   }
 
   /* Hook layer triggers */
   .tla-triggers {
-    display: flex; gap: 24px; align-items: center; justify-content: center;
+    display: flex; gap: 32px; align-items: center; justify-content: center;
   }
   .tla-trigger {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -946,9 +946,9 @@
   .tla-container.animating .tla-trigger.active {
     opacity: 1; transform: scale(1.15);
   }
-  .tla-trigger-icon { width: 36px; height: 36px; object-fit: contain; }
+  .tla-trigger-icon { width: 48px; height: 48px; object-fit: contain; }
   .tla-invert { filter: invert(1); }
-  .tla-trigger-name { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .tla-trigger-name { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 600; }
   .tla-hook-auto {
     opacity: 0; transform: translateY(8px);
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -958,16 +958,16 @@
   }
 
   /* Queue layer */
-  .tla-queues { display: flex; gap: 12px; }
+  .tla-queues { display: flex; gap: 16px; }
   .tla-queue-box {
     flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px; padding: 8px 14px;
+    border-radius: 10px; padding: 14px 20px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .tla-queue-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); }
-  .tla-shapes { display: flex; gap: 10px; align-items: center; }
+  .tla-queue-name { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.6); }
+  .tla-shapes { display: flex; gap: 12px; align-items: center; }
   .tla-shape {
-    width: 18px; height: 18px; opacity: 0.2; transition: opacity 0.4s, box-shadow 0.4s;
+    width: 22px; height: 22px; opacity: 0.2; transition: opacity 0.4s, box-shadow 0.4s;
   }
   .tla-shape.active { opacity: 1; }
   .tla-shape-circle {
@@ -976,8 +976,8 @@
   .tla-shape-circle.active { box-shadow: 0 0 10px var(--nus-blue-glow); }
   .tla-shape-triangle {
     width: 0; height: 0; background: none;
-    border-left: 9px solid transparent; border-right: 9px solid transparent;
-    border-bottom: 18px solid var(--nus-orange);
+    border-left: 11px solid transparent; border-right: 11px solid transparent;
+    border-bottom: 22px solid var(--nus-orange);
   }
   .tla-shape-triangle.active { filter: drop-shadow(0 0 6px var(--nus-orange)); }
   .tla-shape-rect {
@@ -986,14 +986,17 @@
   .tla-shape-rect.active { box-shadow: 0 0 10px rgba(255,255,255,0.5); }
   .tla-shape-diamond {
     background: var(--nus-orange); transform: rotate(45deg);
-    width: 14px; height: 14px;
+    width: 17px; height: 17px;
   }
   .tla-shape-diamond.active { box-shadow: 0 0 10px var(--nus-orange); }
-  .tla-queue-box .tla-scale-badge { flex-shrink: 0; }
+  .tla-queue-box .tla-scale-badge {
+    flex-shrink: 0;
+    width: 32px; height: 32px; font-size: 15px; border-radius: 7px;
+  }
 
   /* Agent layer */
   .tla-agent-row {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
     flex-wrap: nowrap;
   }
   .tla-agent {
@@ -1008,7 +1011,7 @@
   .tla-agent-lg { width: 52px; height: 52px; }
   .tla-agent-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
   .tla-op {
-    font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.15);
+    font-size: 26px; font-weight: 700; color: rgba(255,255,255,0.2);
     transition: color 0.4s;
   }
   .tla-op.active { color: rgba(255,255,255,0.6); }
@@ -1025,21 +1028,21 @@
   /* Agent layer — generic runtime placeholders */
   .tla-avatar {
     display: flex; align-items: center; justify-content: center;
-    width: 56px; height: 56px;
+    width: 76px; height: 76px;
     flex-shrink: 0;
   }
-  .tla-avatar-icon { width: 52px; height: 52px; object-fit: contain; }
+  .tla-avatar-icon { width: 72px; height: 72px; object-fit: contain; }
 
   .tla-placeholder {
-    min-width: 72px; height: 52px;
-    padding: 0 12px;
-    border: 1.5px dotted rgba(255,255,255,0.35);
-    border-radius: 8px;
+    min-width: 96px; height: 68px;
+    padding: 0 16px;
+    border: 2px dotted rgba(255,255,255,0.4);
+    border-radius: 10px;
     background: rgba(255,255,255,0.04);
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.6px; text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.7px; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
     flex-shrink: 0;
   }
   .tla-placeholder-result {
