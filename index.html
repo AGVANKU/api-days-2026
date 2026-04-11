@@ -2177,17 +2177,17 @@
         }
         break;
       case 9:
-        // Iter2 auto-stagger: single click, 5 placeholders fill in sequence over ~2s.
+        // Iter2 auto-stagger: single click, 5 placeholders fill in sequence over ~5s.
         if (forward) {
           const _ph = placeholders, _av = avatar;
           setTimeout(() => {
             _av && _av.classList.add('tla-ex-pulse');
             _ph[0] && _ph[0].classList.add('filled');
           }, 0);
-          setTimeout(() => _ph[1] && _ph[1].classList.add('filled'),  400);
-          setTimeout(() => _ph[2] && _ph[2].classList.add('filled'),  800);
-          setTimeout(() => _ph[3] && _ph[3].classList.add('filled'), 1200);
-          setTimeout(() => _ph[4] && _ph[4].classList.add('filled'), 1600);
+          setTimeout(() => _ph[1] && _ph[1].classList.add('filled'), 1100);
+          setTimeout(() => _ph[2] && _ph[2].classList.add('filled'), 2200);
+          setTimeout(() => _ph[3] && _ph[3].classList.add('filled'), 3300);
+          setTimeout(() => _ph[4] && _ph[4].classList.add('filled'), 4400);
         } else {
           avatar && avatar.classList.remove('tla-ex-pulse');
           placeholders.forEach(p => p.classList.remove('filled'));
