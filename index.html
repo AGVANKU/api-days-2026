@@ -989,12 +989,7 @@
     width: 14px; height: 14px;
   }
   .tla-shape-diamond.active { box-shadow: 0 0 10px var(--nus-orange); }
-  .tla-queues .tla-queue-1ton {
-    flex: 0 0 auto;
-    width: 36px;
-    align-self: center;
-    justify-content: center;
-  }
+  .tla-queue-box .tla-scale-badge { flex-shrink: 0; }
 
   /* Agent layer */
   .tla-agent-row {
@@ -1594,13 +1589,10 @@
             <div class="tla-shapes">
               <div class="tla-shape tla-shape-circle" data-idx="0"></div>
             </div>
-          </div>
-          <div class="oaot-1ton tla-queue-1ton fragment" data-fragment-index="6">
-            <span class="oaot-scale-n">1</span>
-            <span class="oaot-scale-dots">⋮</span>
-            <span class="oaot-scale-n">n</span>
+            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="6">1</span>
           </div>
           <div class="tla-queue-box tla-queue-worker fragment" data-fragment-index="5">
+            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="6">n</span>
             <span class="tla-queue-name">Worker / Team Member Queue</span>
             <div class="tla-shapes">
               <div class="tla-shape tla-shape-triangle" data-idx="1"></div>
