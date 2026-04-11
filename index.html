@@ -994,6 +994,14 @@
     flex-shrink: 0;
     width: 32px; height: 32px; font-size: 15px; border-radius: 7px;
   }
+  /* Queue layer stagger: all 3 elements at fragment-index 4, but worker queue
+     waits 0.4s and 1/n badges wait 0.8s so they cascade visually on one click. */
+  .reveal .slides section .tla-container .tla-queue-worker.fragment {
+    transition: opacity 0.4s ease 0.5s, visibility 0s 0.5s !important;
+  }
+  .reveal .slides section .tla-container .tla-scale-badge.fragment {
+    transition: opacity 0.4s ease 1s, visibility 0s 1s !important;
+  }
 
   /* Agent layer */
   .tla-agent-row {
@@ -1732,10 +1740,10 @@
             <div class="tla-shapes">
               <div class="tla-shape tla-shape-circle" data-idx="0"></div>
             </div>
-            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="6">1</span>
+            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="4">1</span>
           </div>
-          <div class="tla-queue-box tla-queue-worker fragment" data-fragment-index="5">
-            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="6">n</span>
+          <div class="tla-queue-box tla-queue-worker fragment" data-fragment-index="4">
+            <span class="oaot-scale-n tla-scale-badge fragment" data-fragment-index="4">n</span>
             <span class="tla-queue-name">Worker / Team Member Queue</span>
             <div class="tla-shapes">
               <div class="tla-shape tla-shape-triangle tla-worker-triangle" data-idx="1"></div>
